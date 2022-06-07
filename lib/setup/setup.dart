@@ -60,12 +60,12 @@ class _GameSetupPageState extends State<GameSetupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.lightGreen,
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text("Game Setup", style: styles.getHeadingStyle()),
                 GameLengthSetting(

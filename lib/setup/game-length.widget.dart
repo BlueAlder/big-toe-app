@@ -21,12 +21,12 @@ class GameLengthSetting extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: const Icon(Icons.remove),
+              icon: const Icon(Icons.remove, color: Colors.white,),
               onPressed: () => incrementFn(-10),
             ),
             Text(numRounds.toString(), style: styles.getRegularTextStyle()),
             IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add, color: Colors.white),
               onPressed: () => incrementFn(10),
             ),
           ],

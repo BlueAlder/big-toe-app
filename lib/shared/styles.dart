@@ -3,13 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 // Big Toe button Style helper functions
-Widget getElevatedButtonChild(String text) {
+Widget getElevatedButtonChild(String text,{ double fontSize = 30, double paddingAmount = 13.0 }) {
   final buttonStyle = GoogleFonts.arimo(
-    fontSize: 30,
+    fontSize: fontSize,
   );
 
   return Padding(
-    padding: const EdgeInsets.all(13.0),
+    padding: EdgeInsets.all(paddingAmount),
     child: Text(text, style: buttonStyle),
   );
 }
@@ -35,9 +35,10 @@ TextStyle getHeadingStyle() {
   );
 }
 
-TextStyle getRegularTextStyle() {
+TextStyle getRegularTextStyle({Color color = Colors.white}) {
   return GoogleFonts.arimo(
-    fontSize: 20
+    fontSize: 20,
+    color: color
   );
 }
 

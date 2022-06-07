@@ -90,7 +90,7 @@ class Game {
     final availablePlayers = {...players};
     print(availablePlayers);
 
-    if (prompt.contains(replacementKeyword)) {
+    if (prompt.toUpperCase().contains(replacementKeyword)) {
       while(prompt.contains(replacementKeyword) && availablePlayers.isNotEmpty) {
         final selectedPlayer = utils.getRandomElementFromArray(availablePlayers) as String;
         prompt = prompt.replaceFirst(replacementKeyword, selectedPlayer);

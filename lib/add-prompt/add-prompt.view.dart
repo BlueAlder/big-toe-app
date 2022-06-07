@@ -1,9 +1,11 @@
 import 'package:big_toe_mobile/services/prompt.service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../services/notification.service.dart';
 import '../shared/styles.dart' as styles;
 
 final promptService = GetIt.I.get<PromptService>();
+final _notificationService = GetIt.I.get<NotificationService>();
 
 class AddPromptView extends StatefulWidget {
   const AddPromptView({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _AddPromptViewState extends State<AddPromptView> {
 
   void handleSubmitPrompt(String promptString, BuildContext context) {
     if (promptString.isEmpty) {
-      showSnackBarMessage(
+      _notificationService.showSnackBarMessage(
           "Can't submit an empty prompt you fucking idiot", context);
       return;
     }
@@ -32,15 +34,7 @@ class _AddPromptViewState extends State<AddPromptView> {
     promptTextController.text = "";
   }
 
-  void showSnackBarMessage(String message, BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text(message),
-    );
 
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   void showConfirmationDialog(BuildContext context, String prompt) {
     showDialog(

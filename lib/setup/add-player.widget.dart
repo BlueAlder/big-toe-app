@@ -16,10 +16,10 @@ class AddPlayer extends StatefulWidget {
 class _AddPlayerState extends State<AddPlayer> {
   final textController = TextEditingController();
 
-  void handleSubmitPlayer(String playerName) {
+  void handleSubmitPlayer(BuildContext context, String playerName) {
     if (playerName.isNotEmpty) {
       textController.text = "";
-      widget.addPlayer(playerName);
+      widget.addPlayer(context, playerName);
     }
 
   }
@@ -34,15 +34,21 @@ class _AddPlayerState extends State<AddPlayer> {
   Widget build(BuildContext context) {
     return TextField(
       controller: textController,
-      onSubmitted: handleSubmitPlayer,
+      onSubmitted: (value) => handleSubmitPlayer(context, value),
       onEditingComplete: (){},
       maxLength: 20,
+
+      textAlign: TextAlign.center,
+      style: styles.getRegularTextStyle(),
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'Gamer',
+        border: const OutlineInputBorder(),
+        // labelText: 'Gamer',
+        hintText: "Add a player",
+        // filled: true,
+        fillColor: Colors.white,
         suffixIcon: IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () => {handleSubmitPlayer(textController.text)}),
+            onPressed: () => {handleSubmitPlayer(context, textController.text)}),
       ),
     );
   }

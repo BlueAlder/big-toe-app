@@ -24,6 +24,13 @@ class Game {
   @JsonKey(ignore: true)
   bool isGameOver = false;
 
+  // Static Fields
+  static const maxPlayers = 8;
+  static const minRoundCount = 10;
+  static const maxRoundCount = 100;
+
+
+  // Getters
   bool get isReadyToPlay {
     return players.length > 1;
   }
@@ -53,17 +60,17 @@ class Game {
 
   Game changeTotalRounds(int roundDelta) {
     int newRoundAmount = totalRounds + roundDelta;
-    if (newRoundAmount <= 100 && newRoundAmount > 0) {
+    if (newRoundAmount <= maxRoundCount && newRoundAmount > 0) {
       totalRounds = newRoundAmount;
     }
     return this;
   }
 
   Game addPlayer(String playerName) {
-    if (players.length < 8) {
+    if (players.length < maxPlayers) {
       players.add(playerName);
     } else {
-      // TODO: Show error message of max 8 players.
+      throw TooManyPlayersException();
     }
 
     return this;
@@ -105,4 +112,8 @@ class Game {
   factory Game.fromJson(Map<String, Object?> json) => _$GameFromJson(json);
 
   Map<String, Object?> toJson() => _$GameToJson(this);
+}
+
+class TooManyPlayersException implements Exception {
+
 }

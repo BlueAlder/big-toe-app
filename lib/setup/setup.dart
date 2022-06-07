@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../models/game.model.dart';
 import '../services/game.service.dart';
+import '../services/notification.service.dart';
 import '../shared/styles.dart' as styles;
 import '../game/game.page.dart';
 import 'player-list.widget.dart';
 import 'game-length.widget.dart';
 import 'add-player.widget.dart';
 
-GameService gameService = GetIt.I.get<GameService>();
+final gameService = GetIt.I.get<GameService>();
+final notificationService = GetIt.I.get<NotificationService>();
 
 class GameSetupPage extends StatefulWidget {
   const GameSetupPage({Key? key}) : super(key: key);
@@ -29,9 +31,13 @@ class _GameSetupPageState extends State<GameSetupPage> {
     });
   }
 
-  void addPlayer(String playerName) {
+  void addPlayer(BuildContext context, String playerName) {
     setState(() {
+      try {
       _game.addPlayer(playerName);
+      } on TooManyPlayersException  {
+        notificationService.showSnackBarMessage("Cannot have more than 8 players in a game", context);
+      }
     });
   }
 
@@ -67,6 +73,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(height: 100,),
                 Text("Game Setup", style: styles.getHeadingStyle()),
                 GameLengthSetting(
                     numRounds: _game.totalRounds, incrementFn: incrementRounds),
@@ -79,7 +86,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
             )),
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Center(
-                  child: loadingGame ? const Text("Loading Game") : ElevatedButton(
+                  child: loadingGame ? const CircularProgressIndicator(color: Colors.orange,) : ElevatedButton(
                       onPressed: _game.isReadyToPlay ? () => handleStartGame(context) : null,
                       child: styles.getElevatedButtonChild("Start Game"),
                       style: styles.getElevatedButtonStyle())),

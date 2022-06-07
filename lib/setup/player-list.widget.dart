@@ -9,12 +9,14 @@ class PlayerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (players.isNotEmpty) {
-      return Column(children: [
-        Text("Our Gamers", style: styles.getRegularTextStyle()),
+      return Column(
+
+          children: [
+        Text("Our Players", style: styles.getRegularTextStyle()),
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
-          childAspectRatio: (1 / 0.3),
+          childAspectRatio: (1 / 0.2),
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(players.length, (index) {
             return Center(

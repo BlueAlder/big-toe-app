@@ -12,13 +12,13 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
       ..players =
           (json['players'] as List<dynamic>).map((e) => e as String).toSet()
       ..prompts =
-          (json['prompts'] as List<dynamic>).map((e) => e as String).toSet()
+          (json['prompts'] as List<dynamic>).map((e) => e as String).toList()
       ..totalRounds = json['totalRounds'] as int
       ..created = DateTime.parse(json['created'] as String);
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'players': instance.players.toList(),
-      'prompts': instance.prompts.toList(),
+      'prompts': instance.prompts,
       'totalRounds': instance.totalRounds,
       'gameType': instance.gameType,
       'created': instance.created.toIso8601String(),

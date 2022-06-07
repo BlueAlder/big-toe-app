@@ -2,6 +2,7 @@ import 'package:big_toe_mobile/services/prompt.service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../models/game.model.dart';
 import '../services/notification.service.dart';
 import '../shared/styles.dart' as styles;
 
@@ -25,7 +26,7 @@ class _AddPromptViewState extends State<AddPromptView> {
       return;
     }
 
-    if (!promptString.contains("\$NAME")) {
+    if (!promptString.contains(Game.promptPlaceholderWord)) {
       // showSnackBarMessage("You haven't added a placeholder for a name, you sure you wanna submit?", context);
       showConfirmationDialog(context, promptString);
       return;
@@ -65,7 +66,6 @@ class _AddPromptViewState extends State<AddPromptView> {
         text: newPromptString,
         selection: TextSelection.fromPosition(
             TextPosition(offset: newPromptString.length)));
-    // promptTextController.text += "\$NAME";
   }
 
   @override

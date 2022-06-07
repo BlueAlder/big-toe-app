@@ -1,3 +1,4 @@
+import 'package:big_toe_mobile/models/prompt.model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 
@@ -13,7 +14,10 @@ class Game {
 
   // Firebase fields
   Set<String> players = {};
-  Set<String> prompts = {};
+
+  // This cannot be instances of [Prompt] as it does not serialize with the
+  // Firestore ODM.
+  List<String> prompts = [];
   int totalRounds = minRoundCount;
   final String gameType;
   DateTime created = DateTime.now();
@@ -28,6 +32,7 @@ class Game {
   static const maxPlayers = 10;
   static const minRoundCount = 10;
   static const maxRoundCount = 100;
+  static const promptPlaceholderWord = "\$NAME";
 
 
   // Getters
@@ -84,37 +89,23 @@ class Game {
     return this;
   }
 
-  Game addPrompts(Set<String> newPrompts) {
+  Game setPrompts(List<Prompt> newPrompts) {
     if (newPrompts.length != totalRounds) {
       totalRounds = newPrompts.length;
     }
 
-    prompts = newPrompts.map((prompt) => _formatPrompt(prompt)).toSet();
+    prompts = newPrompts.map((prompt) => prompt.formatPrompt(players).text).toList();
     return this;
   }
 
   Game resetGameRound() {
     _roundNumber = 1;
+    prompts = [];
     isGameOver = false;
 
     return this;
   }
 
-  String _formatPrompt(String prompt) {
-    const replacementKeyword = "\$NAME";
-    final availablePlayers = {...players};
-
-    if (prompt.toUpperCase().contains(replacementKeyword)) {
-      while(prompt.contains(replacementKeyword) && availablePlayers.isNotEmpty) {
-        final selectedPlayer = utils.getRandomElementFromArray(availablePlayers) as String;
-        prompt = prompt.replaceFirst(replacementKeyword, selectedPlayer);
-        availablePlayers.remove(selectedPlayer);
-      }
-    } else {
-      prompt = (utils.getRandomElementFromArray(availablePlayers) as String) + prompt;
-    }
-    return prompt;
-  }
 
   factory Game.fromJson(Map<String, Object?> json) => _$GameFromJson(json);
 

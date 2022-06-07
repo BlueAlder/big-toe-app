@@ -5,6 +5,7 @@
 import 'dart:async' as _i5;
 import 'dart:typed_data' as _i6;
 
+import 'package:big_toe_mobile/models/prompt.model.dart' as _i8;
 import 'package:big_toe_mobile/services/prompt.service.dart' as _i7;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart'
@@ -179,10 +180,10 @@ class MockPromptService extends _i1.Mock implements _i7.PromptService {
       (super.noSuchMethod(Invocation.getter(#statsDocumentId), returnValue: '')
           as String);
   @override
-  _i5.Future<List<String>> getPrompts(int? amountOfPrompts) =>
+  _i5.Future<List<_i8.Prompt>> getPrompts(int? amountOfPrompts) =>
       (super.noSuchMethod(Invocation.method(#getPrompts, [amountOfPrompts]),
-              returnValue: Future<List<String>>.value(<String>[]))
-          as _i5.Future<List<String>>);
+              returnValue: Future<List<_i8.Prompt>>.value(<_i8.Prompt>[]))
+          as _i5.Future<List<_i8.Prompt>>);
   @override
   void addPrompt(String? prompt) =>
       super.noSuchMethod(Invocation.method(#addPrompt, [prompt]),

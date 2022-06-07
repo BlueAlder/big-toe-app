@@ -1,4 +1,5 @@
 import 'package:big_toe_mobile/models/game.model.dart';
+import 'package:big_toe_mobile/models/prompt.model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -131,7 +132,7 @@ void main() {
       game.addPlayer(playerName);
 
       const promptValue = "verify $replacementKeyword should be changed";
-      game.addPrompts({promptValue});
+      game.setPrompts([Prompt(promptValue)]);
 
       expect(game.prompts.elementAt(0), "verify test_player should be changed");
       expect(game.totalRounds, 1);
@@ -143,7 +144,7 @@ void main() {
       const playerName2 = "test_player2";
       game.addPlayer(playerName2);
 
-      game.addPrompts(fakePrompts);
+      game.setPrompts(fakePrompts);
 
       for (String prompt in game.prompts) {
         expect(prompt.contains(replacementKeyword), false);
@@ -156,7 +157,7 @@ void main() {
       const playerName2 = "test_player2";
       game.addPlayer(playerName2);
 
-      game.addPrompts(fakePrompts);
+      game.setPrompts(fakePrompts);
       for (String prompt in game.prompts) {
         expect(
             prompt.contains(playerName1) || prompt.contains(playerName2), true);
@@ -180,9 +181,9 @@ void main() {
   });
 }
 
-const fakePrompts = {
-  "ya dilly dally",
-  "ya whoopsie doopsie",
-  "seriously \$NAME what the heckare you doing",
-  "okay this is epic \$NAME",
-};
+final fakePrompts = [
+  Prompt("ya dilly dally"),
+  Prompt("ya whoopsie doopsie"),
+  Prompt("seriously \$NAME what the heckare you doing"),
+  Prompt("okay this is epic \$NAME"),
+];

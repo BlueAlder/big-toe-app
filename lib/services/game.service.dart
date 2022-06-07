@@ -21,7 +21,7 @@ class GameService {
   Future<Game> createNewGame(Game game) async {
     final prompts = await _promptService.getPrompts(game.totalRounds);
     game.resetGameRound();
-    game.addPrompts({...prompts});
+    game.setPrompts(prompts);
     gamesRef.add(game);
     return game;
   }

@@ -44,6 +44,5 @@ Set<int> generateRandomIntSet(int amount, int max) {
 }
 
 Object getRandomElementFromArray(Iterable<Object> iter) {
-  print("Iter Length is" +  iter.length.toString());
   return iter.elementAt(Random().nextInt(iter.length));
 }

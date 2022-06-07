@@ -120,10 +120,13 @@ abstract class GameDocumentReference
   Future<void> update({
     int totalRounds,
     String gameType,
-    int roundNumber,
     bool isGameOver,
+    int maxPlayers,
+    int minRoundCount,
+    int maxRoundCount,
     bool isReadyToPlay,
     String currentPrompt,
+    int roundNumber,
   });
 
   Future<void> set(Game value);
@@ -170,18 +173,24 @@ class _$GameDocumentReference
   Future<void> update({
     Object? totalRounds = _sentinel,
     Object? gameType = _sentinel,
-    Object? roundNumber = _sentinel,
     Object? isGameOver = _sentinel,
+    Object? maxPlayers = _sentinel,
+    Object? minRoundCount = _sentinel,
+    Object? maxRoundCount = _sentinel,
     Object? isReadyToPlay = _sentinel,
     Object? currentPrompt = _sentinel,
+    Object? roundNumber = _sentinel,
   }) async {
     final json = {
       if (totalRounds != _sentinel) "totalRounds": totalRounds as int,
       if (gameType != _sentinel) "gameType": gameType as String,
-      if (roundNumber != _sentinel) "roundNumber": roundNumber as int,
       if (isGameOver != _sentinel) "isGameOver": isGameOver as bool,
+      if (maxPlayers != _sentinel) "maxPlayers": maxPlayers as int,
+      if (minRoundCount != _sentinel) "minRoundCount": minRoundCount as int,
+      if (maxRoundCount != _sentinel) "maxRoundCount": maxRoundCount as int,
       if (isReadyToPlay != _sentinel) "isReadyToPlay": isReadyToPlay as bool,
       if (currentPrompt != _sentinel) "currentPrompt": currentPrompt as String,
+      if (roundNumber != _sentinel) "roundNumber": roundNumber as int,
     };
 
     return reference.update(json);
@@ -252,17 +261,6 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
-  GameQuery whereRoundNumber({
-    int? isEqualTo,
-    int? isNotEqualTo,
-    int? isLessThan,
-    int? isLessThanOrEqualTo,
-    int? isGreaterThan,
-    int? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<int>? whereIn,
-    List<int>? whereNotIn,
-  });
   GameQuery whereIsGameOver({
     bool? isEqualTo,
     bool? isNotEqualTo,
@@ -273,6 +271,39 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     bool? isNull,
     List<bool>? whereIn,
     List<bool>? whereNotIn,
+  });
+  GameQuery whereMaxPlayers({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  });
+  GameQuery whereMinRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  });
+  GameQuery whereMaxRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
   });
   GameQuery whereIsReadyToPlay({
     bool? isEqualTo,
@@ -295,6 +326,17 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     bool? isNull,
     List<String>? whereIn,
     List<String>? whereNotIn,
+  });
+  GameQuery whereRoundNumber({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
   });
 
   GameQuery orderByTotalRounds({
@@ -321,7 +363,19 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     GameDocumentSnapshot? startAfterDocument,
   });
 
-  GameQuery orderByRoundNumber({
+  GameQuery orderByIsGameOver({
+    bool descending = false,
+    bool startAt,
+    bool startAfter,
+    bool endAt,
+    bool endBefore,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  });
+
+  GameQuery orderByMaxPlayers({
     bool descending = false,
     int startAt,
     int startAfter,
@@ -333,12 +387,24 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     GameDocumentSnapshot? startAfterDocument,
   });
 
-  GameQuery orderByIsGameOver({
+  GameQuery orderByMinRoundCount({
     bool descending = false,
-    bool startAt,
-    bool startAfter,
-    bool endAt,
-    bool endBefore,
+    int startAt,
+    int startAfter,
+    int endAt,
+    int endBefore,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  });
+
+  GameQuery orderByMaxRoundCount({
+    bool descending = false,
+    int startAt,
+    int startAfter,
+    int endAt,
+    int endBefore,
     GameDocumentSnapshot? startAtDocument,
     GameDocumentSnapshot? endAtDocument,
     GameDocumentSnapshot? endBeforeDocument,
@@ -363,6 +429,18 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     String startAfter,
     String endAt,
     String endBefore,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  });
+
+  GameQuery orderByRoundNumber({
+    bool descending = false,
+    int startAt,
+    int startAfter,
+    int endAt,
+    int endBefore,
     GameDocumentSnapshot? startAtDocument,
     GameDocumentSnapshot? endAtDocument,
     GameDocumentSnapshot? endBeforeDocument,
@@ -487,34 +565,6 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     );
   }
 
-  GameQuery whereRoundNumber({
-    int? isEqualTo,
-    int? isNotEqualTo,
-    int? isLessThan,
-    int? isLessThanOrEqualTo,
-    int? isGreaterThan,
-    int? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<int>? whereIn,
-    List<int>? whereNotIn,
-  }) {
-    return _$GameQuery(
-      reference.where(
-        'roundNumber',
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
-        isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
-      ),
-      _collection,
-    );
-  }
-
   GameQuery whereIsGameOver({
     bool? isEqualTo,
     bool? isNotEqualTo,
@@ -529,6 +579,90 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(
       reference.where(
         'isGameOver',
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      _collection,
+    );
+  }
+
+  GameQuery whereMaxPlayers({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  }) {
+    return _$GameQuery(
+      reference.where(
+        'maxPlayers',
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      _collection,
+    );
+  }
+
+  GameQuery whereMinRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  }) {
+    return _$GameQuery(
+      reference.where(
+        'minRoundCount',
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      _collection,
+    );
+  }
+
+  GameQuery whereMaxRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  }) {
+    return _$GameQuery(
+      reference.where(
+        'maxRoundCount',
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -585,6 +719,34 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(
       reference.where(
         'currentPrompt',
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      _collection,
+    );
+  }
+
+  GameQuery whereRoundNumber({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  }) {
+    return _$GameQuery(
+      reference.where(
+        'roundNumber',
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -683,7 +845,7 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(query, _collection);
   }
 
-  GameQuery orderByRoundNumber({
+  GameQuery orderByIsGameOver({
     bool descending = false,
     Object? startAt = _sentinel,
     Object? startAfter = _sentinel,
@@ -694,7 +856,7 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     GameDocumentSnapshot? endBeforeDocument,
     GameDocumentSnapshot? startAfterDocument,
   }) {
-    var query = reference.orderBy('roundNumber', descending: descending);
+    var query = reference.orderBy('isGameOver', descending: descending);
 
     if (startAtDocument != null) {
       query = query.startAtDocument(startAtDocument.snapshot);
@@ -725,7 +887,7 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(query, _collection);
   }
 
-  GameQuery orderByIsGameOver({
+  GameQuery orderByMaxPlayers({
     bool descending = false,
     Object? startAt = _sentinel,
     Object? startAfter = _sentinel,
@@ -736,7 +898,91 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     GameDocumentSnapshot? endBeforeDocument,
     GameDocumentSnapshot? startAfterDocument,
   }) {
-    var query = reference.orderBy('isGameOver', descending: descending);
+    var query = reference.orderBy('maxPlayers', descending: descending);
+
+    if (startAtDocument != null) {
+      query = query.startAtDocument(startAtDocument.snapshot);
+    }
+    if (startAfterDocument != null) {
+      query = query.startAfterDocument(startAfterDocument.snapshot);
+    }
+    if (endAtDocument != null) {
+      query = query.endAtDocument(endAtDocument.snapshot);
+    }
+    if (endBeforeDocument != null) {
+      query = query.endBeforeDocument(endBeforeDocument.snapshot);
+    }
+
+    if (startAt != _sentinel) {
+      query = query.startAt([startAt]);
+    }
+    if (startAfter != _sentinel) {
+      query = query.startAfter([startAfter]);
+    }
+    if (endAt != _sentinel) {
+      query = query.endAt([endAt]);
+    }
+    if (endBefore != _sentinel) {
+      query = query.endBefore([endBefore]);
+    }
+
+    return _$GameQuery(query, _collection);
+  }
+
+  GameQuery orderByMinRoundCount({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  }) {
+    var query = reference.orderBy('minRoundCount', descending: descending);
+
+    if (startAtDocument != null) {
+      query = query.startAtDocument(startAtDocument.snapshot);
+    }
+    if (startAfterDocument != null) {
+      query = query.startAfterDocument(startAfterDocument.snapshot);
+    }
+    if (endAtDocument != null) {
+      query = query.endAtDocument(endAtDocument.snapshot);
+    }
+    if (endBeforeDocument != null) {
+      query = query.endBeforeDocument(endBeforeDocument.snapshot);
+    }
+
+    if (startAt != _sentinel) {
+      query = query.startAt([startAt]);
+    }
+    if (startAfter != _sentinel) {
+      query = query.startAfter([startAfter]);
+    }
+    if (endAt != _sentinel) {
+      query = query.endAt([endAt]);
+    }
+    if (endBefore != _sentinel) {
+      query = query.endBefore([endBefore]);
+    }
+
+    return _$GameQuery(query, _collection);
+  }
+
+  GameQuery orderByMaxRoundCount({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  }) {
+    var query = reference.orderBy('maxRoundCount', descending: descending);
 
     if (startAtDocument != null) {
       query = query.startAtDocument(startAtDocument.snapshot);
@@ -821,6 +1067,48 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     GameDocumentSnapshot? startAfterDocument,
   }) {
     var query = reference.orderBy('currentPrompt', descending: descending);
+
+    if (startAtDocument != null) {
+      query = query.startAtDocument(startAtDocument.snapshot);
+    }
+    if (startAfterDocument != null) {
+      query = query.startAfterDocument(startAfterDocument.snapshot);
+    }
+    if (endAtDocument != null) {
+      query = query.endAtDocument(endAtDocument.snapshot);
+    }
+    if (endBeforeDocument != null) {
+      query = query.endBeforeDocument(endBeforeDocument.snapshot);
+    }
+
+    if (startAt != _sentinel) {
+      query = query.startAt([startAt]);
+    }
+    if (startAfter != _sentinel) {
+      query = query.startAfter([startAfter]);
+    }
+    if (endAt != _sentinel) {
+      query = query.endAt([endAt]);
+    }
+    if (endBefore != _sentinel) {
+      query = query.endBefore([endBefore]);
+    }
+
+    return _$GameQuery(query, _collection);
+  }
+
+  GameQuery orderByRoundNumber({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  }) {
+    var query = reference.orderBy('roundNumber', descending: descending);
 
     if (startAtDocument != null) {
       query = query.startAtDocument(startAtDocument.snapshot);

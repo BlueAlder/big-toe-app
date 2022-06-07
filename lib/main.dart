@@ -1,5 +1,6 @@
 import 'package:big_toe_mobile/services/notification.service.dart';
 import 'package:big_toe_mobile/services/prompt.service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -16,12 +17,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setEnabledSystemUIMode (SystemUiMode.immersiveSticky);
   registerServices();
   runApp(const MyApp());
 }
 
 void registerServices() {
-  GetIt.I.registerSingleton<PromptService>(PromptService());
+  GetIt.I.registerSingleton<PromptService>(PromptService(FirebaseFirestore.instance));
   GetIt.I.registerSingleton<GameService>(GameService());
   GetIt.I.registerSingleton<NotificationService>(NotificationService());
 }

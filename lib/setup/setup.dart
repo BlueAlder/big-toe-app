@@ -69,6 +69,10 @@ class _GameSetupPageState extends State<GameSetupPage> {
         // resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            ),
             Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,7 +85,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
                   widthFactor: 0.8,
                   child: AddPlayer(addPlayer: addPlayer),
                 ),
-                PlayerList(players: _game.players)
+                Expanded(child: PlayerList(players: _game.players))
               ],
             )),
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [

@@ -14,18 +14,18 @@ class Game {
   // Firebase fields
   Set<String> players = {};
   Set<String> prompts = {};
-  int totalRounds = 10;
+  int totalRounds = minRoundCount;
   final String gameType;
   DateTime created = DateTime.now();
 
   // Local fields
   @JsonKey(ignore: true)
-  int roundNumber = 1;
+  int _roundNumber = 1;
   @JsonKey(ignore: true)
   bool isGameOver = false;
 
   // Static Fields
-  static const maxPlayers = 8;
+  static const maxPlayers = 10;
   static const minRoundCount = 10;
   static const maxRoundCount = 100;
 
@@ -36,13 +36,17 @@ class Game {
   }
 
   String get currentPrompt {
-    return prompts.elementAt(roundNumber - 1);
+    return prompts.elementAt(_roundNumber - 1);
+  }
+
+  int get roundNumber {
+    return _roundNumber;
   }
 
 
   Game nextRound() {
-    if (roundNumber < totalRounds) {
-      roundNumber++;
+    if (_roundNumber < totalRounds) {
+      _roundNumber++;
     } else {
       isGameOver = true;
     }
@@ -50,8 +54,8 @@ class Game {
   }
 
   Game previousRound() {
-    if (roundNumber > 1) {
-      roundNumber--;
+    if (_roundNumber > 1) {
+      _roundNumber--;
       isGameOver = false;
     }
 
@@ -60,7 +64,11 @@ class Game {
 
   Game changeTotalRounds(int roundDelta) {
     int newRoundAmount = totalRounds + roundDelta;
-    if (newRoundAmount <= maxRoundCount && newRoundAmount > 0) {
+    if (newRoundAmount > maxRoundCount){
+      totalRounds = maxRoundCount;
+    } else if (newRoundAmount <= 0) {
+      totalRounds = minRoundCount;
+    } else {
       totalRounds = newRoundAmount;
     }
     return this;
@@ -86,7 +94,7 @@ class Game {
   }
 
   Game resetGameRound() {
-    roundNumber = 1;
+    _roundNumber = 1;
     isGameOver = false;
 
     return this;
@@ -95,7 +103,6 @@ class Game {
   String _formatPrompt(String prompt) {
     const replacementKeyword = "\$NAME";
     final availablePlayers = {...players};
-    print(availablePlayers);
 
     if (prompt.toUpperCase().contains(replacementKeyword)) {
       while(prompt.contains(replacementKeyword) && availablePlayers.isNotEmpty) {

@@ -9,9 +9,8 @@ class PlayerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (players.isNotEmpty) {
-      return Column(
-
-          children: [
+      return SingleChildScrollView(
+          child: Column(children: [
         Text("Our Players", style: styles.getRegularTextStyle()),
         GridView.count(
           crossAxisCount: 2,
@@ -21,14 +20,18 @@ class PlayerList extends StatelessWidget {
           children: List.generate(players.length, (index) {
             return Center(
                 child: AnimatedTextKit(
-                  animatedTexts: [WavyAnimatedText(players.elementAt(index), textStyle: styles.getRegularTextStyle())],
-                  repeatForever: true,
-                ));
+              animatedTexts: [
+                WavyAnimatedText(players.elementAt(index),
+                    textStyle: styles.getRegularTextStyle())
+              ],
+              repeatForever: true,
+            ));
           }),
         )
-      ]);
+      ]));
     } else {
-      return Center(child: Text("No gamers yet", style: styles.getRegularTextStyle()));
+      return Center(
+          child: Text("No gamers yet", style: styles.getRegularTextStyle()));
     }
   }
 }

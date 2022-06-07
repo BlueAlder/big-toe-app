@@ -4,7 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:big_toe_mobile/shared/utils.dart' as utils;
 
 class PromptService {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+  late final FirebaseFirestore db;
+
+  PromptService(FirebaseFirestore instance) {
+    db = instance;
+  }
 
   final String promptCollectionName = kReleaseMode ? 'prompts' : 'prompts-test';
   final String statsDocumentId = "--stats--";

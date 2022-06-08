@@ -45,7 +45,7 @@ class PromptService {
     batch.commit();
   }
 
-  Stream<DocumentSnapshot> getStatsSnapshots() {
+  Stream<DocumentSnapshot<Object?>> getStatsSnapshots() {
     return _getDocumentReference(statsDocumentId).snapshots();
   }
 

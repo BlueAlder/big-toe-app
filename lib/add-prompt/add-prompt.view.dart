@@ -60,7 +60,7 @@ class _AddPromptViewState extends State<AddPromptView> {
   }
 
   appendPlaceholderToPrompt() {
-    final newPromptString = promptTextController.text + "\$NAME";
+    final newPromptString = promptTextController.text + "\$NAME ";
     promptTextController.value = TextEditingValue(
         text: newPromptString,
         selection: TextSelection.fromPosition(
@@ -137,8 +137,12 @@ class _AddPromptViewState extends State<AddPromptView> {
               StreamBuilder(
                   stream: promptService.getStatsSnapshots(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return Text("We got ${snapshot.data['count']} prompts");
+                    if (snapshot.hasData && snapshot.data.exists) {
+                      if (snapshot.data.exists) {
+                        return Text("We got ${snapshot.data['count']} prompts");
+                      } else {
+                        return const Text("Wow no prompts here...");
+                      }
                     } else if (snapshot.hasError) {
                       return const Text(
                           "There are a lot of prompts, probs like at least 4");

@@ -1,5 +1,4 @@
 import 'package:big_toe_mobile/services/prompt.service.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../models/game.model.dart';

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../models/game.model.dart';
-import '../shared/utils.dart' as utils;
 import '../shared/styles.dart' as styles;
 import 'game-over.widget.dart';
 

@@ -37,17 +37,17 @@ class _AddPlayerState extends State<AddPlayer> {
       onSubmitted: (value) => handleSubmitPlayer(context, value),
       onEditingComplete: (){},
       maxLength: 20,
-
       textAlign: TextAlign.center,
       style: styles.getRegularTextStyle(),
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        // labelText: 'Gamer',
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.white)),
+        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.orangeAccent)),
         hintText: "Add a player",
-        // filled: true,
-        fillColor: Colors.white,
+        hintStyle: const TextStyle(
+          color: Colors.white70,
+        ),
         suffixIcon: IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.white,),
             onPressed: () => {handleSubmitPlayer(context, textController.text)}),
       ),
     );

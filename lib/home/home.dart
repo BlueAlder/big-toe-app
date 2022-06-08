@@ -21,7 +21,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   final mainTitleStyle = GoogleFonts.corben(
     fontSize: 70,
     color: Colors.white,
@@ -32,19 +33,42 @@ class _MyHomePageState extends State<MyHomePage> {
     fontSize: 30,
   );
 
+  late AnimationController rotationController =
+      AnimationController(duration: const Duration(milliseconds: 100), vsync: this)
+        ..addListener(() async {
+          if (rotationController.isCompleted) {
+            await Future.delayed(const Duration(milliseconds: 200));
+            rotationController.reverse();
+          } else if (rotationController.isDismissed) {
+            await Future.delayed(const Duration(milliseconds: 200));
+            rotationController.forward();
+          }
+        })
+        ..forward();
+
   handleNewGame(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return GameSetupPage();
     }));
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
           children: [
+            Align(
+                // alignment: Alignment.topCenter,
+                heightFactor: 2,
+                child: RotationTransition(
+                    child: Image.asset(
+                      "assets/images/star.png",
+                      height: 200,
+                      alignment: Alignment.topCenter,
+                    ),
+                    turns: Tween(begin: -0.01, end: 0.01).animate(
+                      rotationController,
+                    ))),
             const MenuButton(),
             Center(
               child: Column(

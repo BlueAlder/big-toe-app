@@ -80,7 +80,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
                 SizedBox(height: 100,),
                 Text("Game Setup", style: styles.getHeadingStyle()),
                 GameLengthSetting(
-                    numRounds: _game.totalRounds, incrementFn: incrementRounds),
+                    game: _game),
                 FractionallySizedBox(
                   widthFactor: 0.8,
                   child: AddPlayer(addPlayer: addPlayer),

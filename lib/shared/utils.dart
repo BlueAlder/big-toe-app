@@ -1,5 +1,6 @@
 import 'dart:math';
 
+/// A utility class to do utility things.
 class Utils {
 
   static final Set<String> _prompts = {
@@ -18,6 +19,7 @@ class Utils {
     "not h'is is asdjkas🌏🌏🌏🌏🌏",
     "A really rdiasidjaklsjhawskdjfhlasjkhdf lasjkhdflkjashdfjkl liong asuihjksadf jklasdljkf asjklh aklsjdhf lkahsdkljhfalsjkhd fljkahsdl fjha lsdjfh lakshjdfl jkashd fljkahs dfjka lsjdhf lakjshdf nalskdjhf alskjhdf kajnsbd lfkjba ksdjfb kahjsdb fkjahb sdjkhfba sdf"
   };
+
 
   static Set<String> getFakePrompts(int numberOfPrompts) {
     if (numberOfPrompts > _prompts.length) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
 
 
 class GameOver extends StatelessWidget {
@@ -8,11 +8,11 @@ class GameOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("Game Over", style: styles.getPromptTextStyle()),
+      Text("Game Over", style: Styles.getPromptTextStyle()),
       ElevatedButton(
           onPressed: () => {Navigator.pop(context)},
-          child: styles.getElevatedButtonChild("Play again?"),
-          style: styles.getElevatedButtonStyle())
+          child: Styles.getElevatedButtonChild("Play again?"),
+          style: Styles.getElevatedButtonStyle())
     ]);
   }
 }

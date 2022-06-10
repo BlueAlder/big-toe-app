@@ -2,15 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:big_toe_mobile/shared/utils.dart';
+import 'package:get_it/get_it.dart';
 
 import '../models/prompt.model.dart';
+import 'firestore.service.dart';
 
 class PromptService {
-  late final FirebaseFirestore db;
-
-  PromptService(FirebaseFirestore instance) {
-    db = instance;
-  }
+  // late final FirebaseFirestore db;
+  final FirestoreService _firestoreService = GetIt.I.get<FirestoreService>();
 
   final String promptCollectionName = kReleaseMode ? 'prompts' : 'prompts-test';
   final String statsDocumentId = "--stats--";
@@ -23,7 +22,7 @@ class PromptService {
     final promptIds = Utils.generateRandomIntList(amountOfPrompts, promptCount);
 
     final promptFutures = promptIds.map((promptId) {
-      return db.doc('$promptCollectionName/$promptId').get().then((promptDoc) {
+      return _getPromptDocumentSnapshot('$promptId').then((promptDoc) {
         final data = promptDoc.data() as Map<String, dynamic>;
         return Prompt(data['prompt'], id: promptId);
       });
@@ -36,26 +35,33 @@ class PromptService {
     final increment1 = FieldValue.increment(1);
 
     // Since the number of prompts will be the id of the NEXT prompt
-    final promptRef = _getDocumentReference(promptCount.toString());
+    final promptRef = _getPromptDocumentReference(promptCount.toString());
 
-    final batch = db.batch();
+    final batch = _firestoreService.db.batch();
     batch.set(promptRef, {"prompt": prompt});
-    batch.set(_getDocumentReference(statsDocumentId), {"count": increment1},
+    batch.set(_getPromptDocumentReference(statsDocumentId), {"count": increment1},
         SetOptions(merge: true));
     batch.commit();
   }
 
   Stream<DocumentSnapshot<Object?>> getStatsSnapshots() {
-    return _getDocumentReference(statsDocumentId).snapshots();
+    return _getPromptDocumentReference(statsDocumentId).snapshots();
   }
 
   Future<int> _getPromptCount() async {
-    final statsSnapshot = await _getDocumentReference(statsDocumentId).get();
+    final statsSnapshot = await _getPromptDocumentSnapshot(statsDocumentId);
+    if (statsSnapshot.data() == null) {
+      return 0;
+    }
     final statsData = statsSnapshot.data() as Map<String, dynamic>;
     return statsData['count'] as int;
   }
 
-  DocumentReference _getDocumentReference(String id) {
-    return db.collection(promptCollectionName).doc(id);
+  DocumentReference _getPromptDocumentReference(String id) {
+    return _firestoreService.getDocumentReference(promptCollectionName, id);
+  }
+
+  Future<DocumentSnapshot> _getPromptDocumentSnapshot(String id) {
+    return _firestoreService.getDocumentSnapshot(promptCollectionName, id);
   }
 }

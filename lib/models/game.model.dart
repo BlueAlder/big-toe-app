@@ -85,7 +85,11 @@ class Game {
     } else {
       throw TooManyPlayersException();
     }
+    return this;
+  }
 
+  Game removePlayer(String playerName) {
+    return players.remove(playerName) ? this : throw Exception("Player not found");
     return this;
   }
 

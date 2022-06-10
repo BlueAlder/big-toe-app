@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../models/game.model.dart';
 import '../services/game.service.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
 
 GameService gameService = GetIt.I.get<GameService>();
 
@@ -29,7 +29,7 @@ class _GameLengthSettingState extends State<GameLengthSetting>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("Rounds", style: styles.getRegularTextStyle()),
+        Text("Rounds", style: Styles.getRegularTextStyle()),
         RepaintBoundary(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,20 +46,14 @@ class _GameLengthSettingState extends State<GameLengthSetting>
                 duration: const Duration(milliseconds: 200),
                 // switchOutCurve: Curves.easeInOutCubic,
                 // switchInCurve: Curves.fastLinearToSlowEaseIn,
-                transitionBuilder: (child, animation) => RotationTransition(
-                  turns: animation,
-                  child: child,
-                ),
-                // transitionBuilder: (child, animation) =>
-                //     ScaleTransition(scale: animation, child: widget),
-                // transitionBuilder: (Widget child, Animation<double> animation) =>
-                //     RotationTransition(
-                //   turns: animation,
-                //   child: widget,
-                // ),
+                transitionBuilder: (child, animation) =>
+                    RotationTransition(
+                      turns: animation,
+                      child: child,
+                    ),
                 child: Text(widget.game.totalRounds.toString(),
                     key: ValueKey(widget.game.totalRounds),
-                    style: styles.getRegularTextStyle()),
+                    style: Styles.getRegularTextStyle()),
               ),
               IconButton(
                 icon: const Icon(Icons.add, color: Colors.white),
@@ -73,14 +67,3 @@ class _GameLengthSettingState extends State<GameLengthSetting>
     );
   }
 }
-
-// class GameLengthSetting extends StatelessWidget {
-//   GameLengthSetting(
-//       {Key? key, required this.initialNumRounds, required this.incrementFn})
-//       : super(key: key);
-//   int numRounds;
-//   final Function incrementFn;
-//
-//
-//
-// }

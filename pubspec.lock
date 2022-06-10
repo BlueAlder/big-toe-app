@@ -134,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  chip_list:
+    dependency: "direct main"
+    description:
+      name: chip_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.3+8"
   clock:
     dependency: transitive
     description:

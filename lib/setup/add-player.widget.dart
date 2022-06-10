@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../services/game.service.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
+import '../shared/utils.dart';
 
 GameService gameService = GetIt.I.get<GameService>();
 
@@ -21,7 +22,6 @@ class _AddPlayerState extends State<AddPlayer> {
       textController.text = "";
       widget.addPlayer(context, playerName);
     }
-
   }
 
   @override
@@ -35,23 +35,22 @@ class _AddPlayerState extends State<AddPlayer> {
     return TextField(
       controller: textController,
       onSubmitted: (value) => handleSubmitPlayer(context, value),
-      onEditingComplete: (){},
+      onEditingComplete: () {},
       maxLength: 20,
       textAlign: TextAlign.center,
-      style: styles.getRegularTextStyle(),
-      decoration: InputDecoration(
-        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.white)),
-        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.orangeAccent)),
-        hintText: "Add a player",
-        hintStyle: const TextStyle(
-          color: Colors.white70,
-        ),
-        suffixIcon: IconButton(
-            icon: const Icon(Icons.add, color: Colors.white,),
-            onPressed: () => {handleSubmitPlayer(context, textController.text)}),
-      ),
+      style: Styles.getRegularTextStyle(),
+      decoration: Utils.mergeInputDecoration(
+          Styles.getTextFieldDecorationStyle(),
+          InputDecoration(
+            hintText: "Add a player",
+            suffixIcon: IconButton(
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onPressed: () =>
+                    {handleSubmitPlayer(context, textController.text)}),
+          )),
     );
   }
 }
-
-

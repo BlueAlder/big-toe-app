@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 /// A utility class to do utility things.
 class Utils {
 
@@ -41,7 +43,7 @@ class Utils {
   static Set<int> generateRandomIntSet(int amount, int max) {
     Set<int> intSet = {};
 
-    if (amount > max ) {
+    if (amount > max) {
       throw Exception("Amount cannot be more than max.");
     }
     while (intSet.length < amount) {
@@ -63,5 +65,60 @@ class Utils {
   static Object getRandomElementFromArray(Iterable<Object> iter) {
     return iter.elementAt(Random().nextInt(iter.length));
   }
-}
 
+//  Merge helper function for InputDecoration
+  static InputDecoration mergeInputDecoration(InputDecoration baseStyle,
+      InputDecoration customStyle) {
+    return baseStyle.copyWith(
+      alignLabelWithHint: customStyle.alignLabelWithHint,
+      border: customStyle.border,
+      constraints: customStyle.constraints,
+      contentPadding: customStyle.contentPadding,
+      counter: customStyle.counter,
+      counterStyle: customStyle.counterStyle,
+      counterText: customStyle.counterText,
+      disabledBorder: customStyle.disabledBorder,
+      enabled: customStyle.enabled,
+      enabledBorder: customStyle.enabledBorder,
+      errorBorder: customStyle.errorBorder,
+      errorMaxLines: customStyle.errorMaxLines,
+      errorStyle: customStyle.errorStyle,
+      errorText: customStyle.errorText,
+      fillColor: customStyle.fillColor,
+      filled: customStyle.filled,
+      floatingLabelBehavior: customStyle.floatingLabelBehavior,
+      floatingLabelStyle: customStyle.floatingLabelStyle,
+      focusColor: customStyle.focusColor,
+      focusedBorder: customStyle.focusedBorder,
+      focusedErrorBorder: customStyle.focusedErrorBorder,
+      helperMaxLines: customStyle.helperMaxLines,
+      helperStyle: customStyle.helperStyle,
+      helperText: customStyle.helperText,
+      hintMaxLines: customStyle.hintMaxLines,
+      hintStyle: customStyle.hintStyle,
+      hintText: customStyle.hintText,
+      hintTextDirection: customStyle.hintTextDirection,
+      hoverColor: customStyle.hoverColor,
+      icon: customStyle.icon,
+      iconColor: customStyle.iconColor,
+      isCollapsed: customStyle.isCollapsed,
+      isDense: customStyle.isDense,
+      label: customStyle.label,
+      labelStyle: customStyle.labelStyle,
+      labelText: customStyle.labelText,
+      prefix: customStyle.prefix,
+      prefixIcon: customStyle.prefixIcon,
+      prefixIconColor: customStyle.prefixIconColor,
+      prefixIconConstraints: customStyle.prefixIconConstraints,
+      prefixStyle: customStyle.prefixStyle,
+      prefixText: customStyle.prefixText,
+      semanticCounterText: customStyle.semanticCounterText,
+      suffix: customStyle.suffix,
+      suffixIcon: customStyle.suffixIcon,
+      suffixIconColor: customStyle.suffixIconColor,
+      suffixIconConstraints: customStyle.suffixIconConstraints,
+      suffixStyle: customStyle.suffixStyle,
+      suffixText: customStyle.suffixText,
+    );
+  }
+}

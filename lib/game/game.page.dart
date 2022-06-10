@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../models/game.model.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
 import 'game-over.widget.dart';
 
 class GamePage extends StatefulWidget {
@@ -35,7 +35,6 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
-
   void handleTap() {
     widget.game.nextRound();
     randomUpdateBackground();
@@ -66,6 +65,6 @@ class _GamePageState extends State<GamePage> {
                     : SingleChildScrollView(
                         child: Text(widget.game.currentPrompt,
                             textAlign: TextAlign.center,
-                            style: styles.getPromptTextStyle())))));
+                            style: Styles.getPromptTextStyle())))));
   }
 }

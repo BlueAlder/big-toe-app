@@ -31,7 +31,7 @@ class Prompt {
         availablePlayers.remove(selectedPlayer);
       }
     } else {
-      formattedPrompt = (Utils.getRandomElementFromArray(availablePlayers) as String) + formattedPrompt;
+      formattedPrompt = (Utils.getRandomElementFromArray(availablePlayers) as String) + ", " + formattedPrompt;
     }
     return setText(formattedPrompt);
   }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../setup/setup.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
+import 'draw-options.widget.dart';
+import 'menu-button.widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -33,18 +35,18 @@ class _MyHomePageState extends State<MyHomePage>
     fontSize: 30,
   );
 
-  late AnimationController rotationController =
-      AnimationController(duration: const Duration(milliseconds: 100), vsync: this)
-        ..addListener(() async {
-          if (rotationController.isCompleted) {
-            await Future.delayed(const Duration(milliseconds: 200));
-            rotationController.reverse();
-          } else if (rotationController.isDismissed) {
-            await Future.delayed(const Duration(milliseconds: 200));
-            rotationController.forward();
-          }
-        })
-        ..forward();
+  late AnimationController rotationController = AnimationController(
+      duration: const Duration(milliseconds: 100), vsync: this)
+    ..addListener(() async {
+      if (rotationController.isCompleted) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        rotationController.reverse();
+      } else if (rotationController.isDismissed) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        rotationController.forward();
+      }
+    })
+    ..forward();
 
   handleNewGame(context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -55,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             Align(
@@ -79,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage>
                   const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () => handleNewGame(context),
-                    child: styles.getElevatedButtonChild("New Game"),
-                    style: styles.getElevatedButtonStyle(),
+                    child: Styles.getElevatedButtonChild("New Game"),
+                    style: Styles.getElevatedButtonStyle(),
                   )
                 ],
               ),
@@ -92,52 +95,3 @@ class _MyHomePageState extends State<MyHomePage>
   }
 }
 
-class MenuButton extends StatelessWidget {
-  const MenuButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(25),
-      child: IconButton(
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          icon: const Icon(
-            Icons.menu,
-            size: 40,
-          )),
-    );
-  }
-}
-
-class DrawerOptions extends StatelessWidget {
-  const DrawerOptions({Key? key}) : super(key: key);
-
-  handleAddPrompt(context) {
-    Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return AddPromptView();
-    }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 50),
-        Image.asset(
-          'assets/icons/launcher.png',
-          height: 150,
-        ),
-        Text("Big Toe", style: styles.getHeadingStyle()),
-        const Divider(thickness: 2, indent: 20, endIndent: 20),
-        ListTile(
-            leading: Icon(Icons.add),
-            onTap: () => handleAddPrompt(context),
-            title:
-                Text("Add some prompts", style: styles.getRegularTextStyle()))
-      ],
-    );
-  }
-}

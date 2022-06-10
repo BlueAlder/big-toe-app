@@ -123,6 +123,32 @@ void main() {
       expect(() => game.addPlayer("9th player"),
           throwsA(isA<TooManyPlayersException>()));
     });
+
+    test("Removing a player", () {
+      const newPlayer1 = "newPlayer1";
+      const newPlayer2 = "newPlayer2";
+      game.addPlayer(newPlayer1);
+      game.addPlayer(newPlayer2);
+
+      expect(game.players.length, equals(2));
+
+      game.removePlayer(newPlayer1);
+
+      expect(game.players.length, equals(1));
+      expect(game.players.elementAt(0), equals(newPlayer2));
+    });
+
+    test("Removing a player that doesn't exist", () {
+      const newPlayer1 = "newPlayer1";
+      const newPlayer2 = "newPlayer2";
+      game.addPlayer(newPlayer1);
+      game.addPlayer(newPlayer2);
+
+      expect(game.players.length, equals(2));
+
+      expect(() => game.removePlayer("fake player"), throwsException);
+      expect(game.players.length, equals(2));
+    });
   });
 
   const replacementKeyword = "\$NAME";

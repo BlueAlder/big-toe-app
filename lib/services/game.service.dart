@@ -12,11 +12,8 @@ part 'game.service.g.dart';
 @Collection<Game>('games-app')
 final gamesRef = GameCollectionReference();
 
-// final _promptService = GetIt.I.get<PromptService>();
-
 class GameService {
   final _promptService = GetIt.I.get<PromptService>();
-
 
   Future<Game> createNewGame(Game game) async {
     final prompts = await _promptService.getPrompts(game.totalRounds);

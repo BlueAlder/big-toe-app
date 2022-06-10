@@ -1,3 +1,4 @@
+import 'package:big_toe_mobile/services/firestore.service.dart';
 import 'package:big_toe_mobile/services/notification.service.dart';
 import 'package:big_toe_mobile/services/prompt.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +23,7 @@ Future<void> main() async {
 }
 
 void registerServices() {
-  const bool useEmulator = false;
+  const bool useEmulator = true;
 
   if (useEmulator) {
     FirebaseFirestore.instance.settings = const Settings(
@@ -32,8 +33,8 @@ void registerServices() {
     );
   }
 
-  GetIt.I.registerSingleton<PromptService>(
-      PromptService(FirebaseFirestore.instance));
+  GetIt.I.registerSingleton(FirestoreService());
+  GetIt.I.registerSingleton<PromptService>(PromptService());
   GetIt.I.registerSingleton<GameService>(GameService());
   GetIt.I.registerSingleton<NotificationService>(NotificationService());
 }

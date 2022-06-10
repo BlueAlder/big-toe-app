@@ -1,9 +1,11 @@
 import 'package:big_toe_mobile/services/prompt.service.dart';
+import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../models/game.model.dart';
 import '../services/notification.service.dart';
-import '../shared/styles.dart' as styles;
+import '../shared/styles.dart';
+import '../shared/utils.dart';
 
 final promptService = GetIt.I.get<PromptService>();
 final _notificationService = GetIt.I.get<NotificationService>();
@@ -17,6 +19,7 @@ class AddPromptView extends StatefulWidget {
 
 class _AddPromptViewState extends State<AddPromptView> {
   final promptTextController = TextEditingController();
+  final selectedCategory = "One";
 
   void handleSubmitPrompt(String promptString, BuildContext context) {
     if (promptString.isEmpty) {
@@ -76,7 +79,7 @@ class _AddPromptViewState extends State<AddPromptView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.deepPurple,
         body: Stack(
           children: [
             IconButton(
@@ -88,32 +91,46 @@ class _AddPromptViewState extends State<AddPromptView> {
               children: [
                 Text("Add some prompts 😈",
                     textAlign: TextAlign.center,
-                    style: styles.getHeadingStyle()),
+                    style: Styles.getHeadingStyle()),
+
                 FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: TextField(
-                    controller: promptTextController,
-                    onSubmitted: (value) => handleSubmitPrompt(value, context),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      hintText: "\$NAME please drink \$NAME's drink",
-                      fillColor: Colors.white,
-                      focusColor: Colors.red,
-                    ),
-                  ),
-                ),
+                    widthFactor: 0.8,
+                    child: Column(
+                      children: [
+                         ChipList(
+                            listOfChipNames: ['picante', 'bang', 'crip'],
+                            supportsMultiSelect: true,
+                            style: Styles.getRegularTextStyle(),
+
+                            inactiveTextColorList: [Colors.orangeAccent],
+                            activeBgColorList: [Colors.orangeAccent],
+                            listOfChipIndicesCurrentlySeclected: []),
+                        TextField(
+                            controller: promptTextController,
+                            style: TextStyle(color: Colors.white),
+                            onSubmitted: (value) =>
+                                handleSubmitPrompt(value, context),
+                            decoration: Utils.mergeInputDecoration(
+                              Styles.getTextFieldDecorationStyle(),
+                              const InputDecoration(
+                                hintText: "\$NAME please drink \$NAME's drink",
+                              ),
+                            )),
+                      ],
+                    )),
                 RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                        style: styles.getRegularTextStyle(),
+                        style: Styles.getRegularTextStyle(),
                         children: [
                           const TextSpan(text: "Use "),
                           WidgetSpan(
                               alignment: PlaceholderAlignment.middle,
                               child: TextButton(
                                 onPressed: () => appendPlaceholderToPrompt(),
-                                child: const Text("\$NAME", style: TextStyle(color: Colors.orangeAccent)),
+                                child: const Text("\$NAME",
+                                    style:
+                                        TextStyle(color: Colors.orangeAccent)),
                               )),
                           const TextSpan(text: " as placeholders for players "),
                         ]))
@@ -129,15 +146,15 @@ class _AddPromptViewState extends State<AddPromptView> {
                 child: ElevatedButton(
                   onPressed: () =>
                       handleSubmitPrompt(promptTextController.text, context),
-                  child: styles.getElevatedButtonChild("Add Prompt",
+                  child: Styles.getElevatedButtonChild("Add Prompt",
                       fontSize: 20, paddingAmount: 1),
-                  style: styles.getElevatedButtonStyle(),
+                  style: Styles.getElevatedButtonStyle(),
                 ),
               ),
               StreamBuilder(
                   stream: promptService.getStatsSnapshots(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData && snapshot.data.exists) {
+                    if (snapshot.hasData) {
                       if (snapshot.data.exists) {
                         return Text("We got ${snapshot.data['count']} prompts");
                       } else {
@@ -147,6 +164,7 @@ class _AddPromptViewState extends State<AddPromptView> {
                       return const Text(
                           "There are a lot of prompts, probs like at least 4");
                     } else {
+                      debugPrint(snapshot.toString());
                       return Container();
                     }
                   })

@@ -43,9 +43,6 @@ class _FakeQuery_6<T extends Object?> extends _i1.Fake implements _i4.Query<T> {
 class _FakeDocumentReference_7<T extends Object?> extends _i1.Fake
     implements _i4.DocumentReference<T> {}
 
-class _FakeFirebaseFirestore_8 extends _i1.Fake
-    implements _i4.FirebaseFirestore {}
-
 /// A class which mocks [FirebaseFirestore].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -164,13 +161,6 @@ class MockPromptService extends _i1.Mock implements _i7.PromptService {
     _i1.throwOnMissingStub(this);
   }
 
-  @override
-  _i4.FirebaseFirestore get db => (super.noSuchMethod(Invocation.getter(#db),
-      returnValue: _FakeFirebaseFirestore_8()) as _i4.FirebaseFirestore);
-  @override
-  set db(_i4.FirebaseFirestore? _db) =>
-      super.noSuchMethod(Invocation.setter(#db, _db),
-          returnValueForMissingStub: null);
   @override
   String get promptCollectionName =>
       (super.noSuchMethod(Invocation.getter(#promptCollectionName),

@@ -2,7 +2,7 @@ import 'package:big_toe_mobile/add-prompt/add-prompt.view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../setup/setup.dart';
+import '../setup/setup-game.view.dart';
 import '../shared/styles.dart';
 import 'draw-options.widget.dart';
 import 'menu-button.widget.dart';

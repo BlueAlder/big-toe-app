@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Styles {
+
+  static const textFieldWidth = 320.0;
+
   // Big Toe button Style helper functions
   static Widget getElevatedButtonChild(String text,{ double fontSize = 30, double paddingAmount = 13.0 }) {
     final buttonStyle = GoogleFonts.arimo(

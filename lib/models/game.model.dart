@@ -8,9 +8,8 @@ part 'game.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Game {
-  Game({
-    this.gameType = "picante",
-  });
+
+  Game();
 
   // Firebase fields
   Set<String> players = {};
@@ -19,7 +18,7 @@ class Game {
   // Firestore ODM.
   List<String> prompts = [];
   int totalRounds = minRoundCount;
-  final String gameType;
+  Set<String> tags = {};
   DateTime created = DateTime.now();
 
   // Local fields
@@ -36,17 +35,9 @@ class Game {
 
 
   // Getters
-  bool get isReadyToPlay {
-    return players.length > 1;
-  }
-
-  String get currentPrompt {
-    return prompts.elementAt(_roundNumber - 1);
-  }
-
-  int get roundNumber {
-    return _roundNumber;
-  }
+  bool get isReadyToPlay => players.length > 1;
+  String get currentPrompt  => prompts.elementAt(_roundNumber - 1);
+  int get roundNumber => _roundNumber;
 
 
   Game nextRound() {
@@ -99,6 +90,11 @@ class Game {
     }
 
     prompts = newPrompts.map((prompt) => prompt.formatPrompt(players).text).toList();
+    return this;
+  }
+
+  Game setTags(Set<String> newTags) {
+    tags = newTags;
     return this;
   }
 

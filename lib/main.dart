@@ -18,12 +18,14 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]);
   registerServices();
   runApp(const MyApp());
 }
 
 void registerServices() {
-  const bool useEmulator = true;
+  const bool useEmulator = false;
 
   if (useEmulator) {
     FirebaseFirestore.instance.settings = const Settings(

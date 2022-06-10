@@ -5,20 +5,29 @@ class Prompt {
 
   String _text;
   final int? _id;
+  Set<String> _tags = {};
 
-  Prompt(this._text, {int? id}) : _id=id;
+  Prompt(this._text, {int? id}) : _id = id;
 
-  String get text {
-    return _text;
-  }
+  String get text => _text;
+  int? get id => _id;
+  Set<String> get tags => _tags;
 
-  int? get id {
-    return _id;
+  Prompt setTags(Set<String> newTags) {
+    _tags = newTags;
+    return this;
   }
 
   Prompt setText(String newText) {
     _text = newText;
     return this;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'prompt': _text,
+      'tags': _tags.toList()
+    };
   }
 
   Prompt formatPrompt(Set<String> players) {

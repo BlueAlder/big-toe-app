@@ -16,7 +16,7 @@ class GameService {
   final _promptService = GetIt.I.get<PromptService>();
 
   Future<Game> createNewGame(Game game) async {
-    final prompts = await _promptService.getPrompts(game.totalRounds);
+    final prompts = await _promptService.getRandomPromptsFilteredByTags(game.totalRounds, game.tags);
     game.resetGameRound();
     game.setPrompts(prompts);
     gamesRef.add(game);

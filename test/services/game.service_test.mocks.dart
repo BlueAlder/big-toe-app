@@ -170,12 +170,20 @@ class MockPromptService extends _i1.Mock implements _i7.PromptService {
       (super.noSuchMethod(Invocation.getter(#statsDocumentId), returnValue: '')
           as String);
   @override
-  _i5.Future<List<_i8.Prompt>> getPrompts(int? amountOfPrompts) =>
-      (super.noSuchMethod(Invocation.method(#getPrompts, [amountOfPrompts]),
+  _i4.CollectionReference<Object?> get collectionReference =>
+      (super.noSuchMethod(Invocation.getter(#collectionReference),
+              returnValue: _FakeCollectionReference_2<Object?>())
+          as _i4.CollectionReference<Object?>);
+  @override
+  _i5.Future<List<_i8.Prompt>> getRandomPromptsFilteredByTags(
+          int? amountOfPrompts, Set<String>? tags) =>
+      (super.noSuchMethod(
+              Invocation.method(
+                  #getRandomPromptsFilteredByTags, [amountOfPrompts, tags]),
               returnValue: Future<List<_i8.Prompt>>.value(<_i8.Prompt>[]))
           as _i5.Future<List<_i8.Prompt>>);
   @override
-  void addPrompt(String? prompt) =>
+  void addPrompt(_i8.Prompt? prompt) =>
       super.noSuchMethod(Invocation.method(#addPrompt, [prompt]),
           returnValueForMissingStub: null);
   @override

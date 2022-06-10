@@ -1,9 +1,15 @@
+import 'package:big_toe_mobile/add-prompt/placeholder-button-prompt.widget.dart';
+import 'package:big_toe_mobile/add-prompt/prompt-count.widget.dart';
+import 'package:big_toe_mobile/shared/widgets/select-tags.widget.dart';
 import 'package:big_toe_mobile/services/prompt.service.dart';
+import 'package:big_toe_mobile/shared/widgets/back-button.widget.dart';
 import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../models/game.model.dart';
+import '../models/prompt.model.dart';
 import '../services/notification.service.dart';
+import '../shared/widgets/footer-spacing.widget.dart';
 import '../shared/styles.dart';
 import '../shared/utils.dart';
 
@@ -19,7 +25,7 @@ class AddPromptView extends StatefulWidget {
 
 class _AddPromptViewState extends State<AddPromptView> {
   final promptTextController = TextEditingController();
-  final selectedCategory = "One";
+  Set<String> selectedTags = {};
 
   void handleSubmitPrompt(String promptString, BuildContext context) {
     if (promptString.isEmpty) {
@@ -29,13 +35,22 @@ class _AddPromptViewState extends State<AddPromptView> {
     }
 
     if (!promptString.contains(Game.promptPlaceholderWord)) {
-      // showSnackBarMessage("You haven't added a placeholder for a name, you sure you wanna submit?", context);
       showConfirmationDialog(context, promptString);
       return;
     }
 
-    promptService.addPrompt(promptString);
+    addPrompt(promptString);
+  }
+
+  void addPrompt(String promptString) {
+    final newPrompt = Prompt(promptString).setTags(selectedTags);
+    promptService.addPrompt(newPrompt);
     promptTextController.text = "";
+  }
+
+  void handleTagChange(Set<String> newTags) {
+    selectedTags = newTags;
+    debugPrint(selectedTags.toString());
   }
 
   void showConfirmationDialog(BuildContext context, String prompt) {
@@ -53,8 +68,7 @@ class _AddPromptViewState extends State<AddPromptView> {
                   ),
                   TextButton(
                     onPressed: () {
-                      promptService.addPrompt(prompt);
-                      promptTextController.text = "";
+                      addPrompt(prompt);
                       Navigator.pop(context, "Yes I'm sure");
                     },
                     child: const Text("Yes I'm sure"),
@@ -82,67 +96,42 @@ class _AddPromptViewState extends State<AddPromptView> {
         backgroundColor: Colors.deepPurple,
         body: Stack(
           children: [
-            IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context)),
+            SpacedBackButton(),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Add some prompts 😈",
                     textAlign: TextAlign.center,
                     style: Styles.getHeadingStyle()),
 
-                FractionallySizedBox(
-                    widthFactor: 0.8,
-                    child: Column(
-                      children: [
-                         ChipList(
-                            listOfChipNames: ['picante', 'bang', 'crip'],
-                            supportsMultiSelect: true,
-                            style: Styles.getRegularTextStyle(),
-
-                            inactiveTextColorList: [Colors.orangeAccent],
-                            activeBgColorList: [Colors.orangeAccent],
-                            listOfChipIndicesCurrentlySeclected: []),
-                        TextField(
-                            controller: promptTextController,
-                            style: TextStyle(color: Colors.white),
-                            onSubmitted: (value) =>
-                                handleSubmitPrompt(value, context),
-                            decoration: Utils.mergeInputDecoration(
-                              Styles.getTextFieldDecorationStyle(),
-                              const InputDecoration(
-                                hintText: "\$NAME please drink \$NAME's drink",
-                              ),
-                            )),
-                      ],
-                    )),
-                RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        style: Styles.getRegularTextStyle(),
-                        children: [
-                          const TextSpan(text: "Use "),
-                          WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: TextButton(
-                                onPressed: () => appendPlaceholderToPrompt(),
-                                child: const Text("\$NAME",
-                                    style:
-                                        TextStyle(color: Colors.orangeAccent)),
-                              )),
-                          const TextSpan(text: " as placeholders for players "),
-                        ]))
-                // style: styles.getRegularTextStyle()),
+                SelectTags(
+                  onTagChange: handleTagChange,
+                ),
+                ConstrainedBox(
+                     constraints: const BoxConstraints(maxWidth: Styles.textFieldWidth),
+                    child: TextField(
+                        controller: promptTextController,
+                        style: const TextStyle(color: Colors.white),
+                        onSubmitted: (value) =>
+                            handleSubmitPrompt(value, context),
+                        decoration: Utils.mergeInputDecoration(
+                          Styles.getTextFieldDecorationStyle(),
+                          const InputDecoration(
+                            hintText: "\$NAME please drink \$NAME's drink",
+                          ),
+                        )
+                    )
+                ),
+                PlaceholderButtonPrompt(
+                    appendPlaceholderToPrompt: appendPlaceholderToPrompt)
               ],
             ),
             Align(
                 // alignment: Alignment.bottomCenter,
                 child:
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              FractionallySizedBox(
-                widthFactor: 0.5,
+              Container(
+                constraints: const BoxConstraints(maxWidth: 200),
                 child: ElevatedButton(
                   onPressed: () =>
                       handleSubmitPrompt(promptTextController.text, context),
@@ -151,23 +140,8 @@ class _AddPromptViewState extends State<AddPromptView> {
                   style: Styles.getElevatedButtonStyle(),
                 ),
               ),
-              StreamBuilder(
-                  stream: promptService.getStatsSnapshots(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data.exists) {
-                        return Text("We got ${snapshot.data['count']} prompts");
-                      } else {
-                        return const Text("Wow no prompts here...");
-                      }
-                    } else if (snapshot.hasError) {
-                      return const Text(
-                          "There are a lot of prompts, probs like at least 4");
-                    } else {
-                      debugPrint(snapshot.toString());
-                      return Container();
-                    }
-                  })
+              PromptCount(),
+              const FooterSpacing()
             ]))
           ],
         ));

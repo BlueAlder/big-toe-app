@@ -1,3 +1,6 @@
+import 'package:big_toe_mobile/shared/widgets/select-tags.widget.dart';
+import 'package:big_toe_mobile/shared/widgets/back-button.widget.dart';
+import 'package:big_toe_mobile/shared/widgets/footer-spacing.widget.dart';
 import 'package:cloud_firestore_odm/annotation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -21,7 +24,6 @@ class GameSetupPage extends StatefulWidget {
 }
 
 class _GameSetupPageState extends State<GameSetupPage> {
-
   final Game _game = Game();
   bool loadingGame = false;
 
@@ -31,12 +33,18 @@ class _GameSetupPageState extends State<GameSetupPage> {
     });
   }
 
-  void addPlayer(BuildContext context, String playerName) {
+  void handleChangeTags(Set<String> newTags) {
+    _game.setTags(newTags);
+  }
+
+  void handleAddPlayer(BuildContext context, String playerName) {
     setState(() {
       try {
-      _game.addPlayer(playerName);
-      } on TooManyPlayersException  {
-        notificationService.showSnackBarMessage("Cannot have more than ${Game.maxPlayers} players in a game", context);
+        _game.addPlayer(playerName);
+      } on TooManyPlayersException {
+        notificationService.showSnackBarMessage(
+            "Cannot have more than ${Game.maxPlayers} players in a game",
+            context);
       }
     });
   }
@@ -49,53 +57,59 @@ class _GameSetupPageState extends State<GameSetupPage> {
 
     try {
       final populatedGame = await gameService.createNewGame(_game);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) {
-            return GamePage(game: populatedGame,);
-          }));
-    } catch(e) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return GamePage(
+          game: populatedGame,
+        );
+      }));
+    } catch (e) {
       print(e);
     } finally {
       setState(() {
         loadingGame = false;
       });
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.lightGreen,
-        // resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
-            ),
-            Center(
-                child: Column(
+            const SpacedBackButton(),
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 100,),
+                const SizedBox(
+                  height: 100,
+                ),
                 Text("Game Setup", style: Styles.getHeadingStyle()),
-                GameLengthSetting(
-                    game: _game),
-                FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: AddPlayer(addPlayer: addPlayer),
+                GameLengthSetting(game: _game),
+                SelectTags(
+                  onTagChange: handleChangeTags,
+                ),
+                Container(
+                  constraints: const BoxConstraints(maxWidth: Styles.textFieldWidth),
+                  child: AddPlayer(addPlayer: handleAddPlayer),
                 ),
                 Expanded(child: PlayerList(game: _game))
               ],
-            )),
+            ),
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Center(
-                  child: loadingGame ? const CircularProgressIndicator(color: Colors.orange,) : ElevatedButton(
-                      onPressed: _game.isReadyToPlay ? () => handleStartGame(context) : null,
-                      child: Styles.getElevatedButtonChild("Start Game"),
-                      style: Styles.getElevatedButtonStyle())),
-              const SizedBox(height: 10)
+                  child: loadingGame
+                      ? const CircularProgressIndicator(
+                          color: Colors.orange,
+                        )
+                      : ElevatedButton(
+                          onPressed: _game.isReadyToPlay
+                              ? () => handleStartGame(context)
+                              : null,
+                          child: Styles.getElevatedButtonChild("Start Game"),
+                          style: Styles.getElevatedButtonStyle())),
+              const FooterSpacing()
             ]),
           ],
         ));

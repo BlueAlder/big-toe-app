@@ -1,9 +1,9 @@
-import 'package:big_toe_mobile/shared/widgets/select-tags.widget.dart';
-import 'package:big_toe_mobile/shared/widgets/back-button.widget.dart';
-import 'package:big_toe_mobile/shared/widgets/footer-spacing.widget.dart';
-import 'package:cloud_firestore_odm/annotation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
+import '../shared/widgets/select-tags.widget.dart';
+import '../shared/widgets/back-button.widget.dart';
+import '../shared/widgets/footer-spacing.widget.dart';
 import '../models/game.model.dart';
 import '../services/game.service.dart';
 import '../services/notification.service.dart';
@@ -76,42 +76,47 @@ class _GameSetupPageState extends State<GameSetupPage> {
     return Scaffold(
         backgroundColor: Colors.lightGreen,
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            const SpacedBackButton(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+        body: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Stack(
               children: [
-                const SizedBox(
-                  height: 100,
+                const SpacedBackButton(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Text("Game Setup", style: Styles.getHeadingStyle()),
+                    GameLengthSetting(game: _game),
+                    SelectTags(
+                      onTagChange: handleChangeTags,
+                    ),
+                    Container(
+                      constraints:
+                          const BoxConstraints(maxWidth: Styles.textFieldWidth),
+                      child: AddPlayer(addPlayer: handleAddPlayer),
+                    ),
+                    Expanded(child: PlayerList(game: _game))
+                  ],
                 ),
-                Text("Game Setup", style: Styles.getHeadingStyle()),
-                GameLengthSetting(game: _game),
-                SelectTags(
-                  onTagChange: handleChangeTags,
-                ),
-                Container(
-                  constraints: const BoxConstraints(maxWidth: Styles.textFieldWidth),
-                  child: AddPlayer(addPlayer: handleAddPlayer),
-                ),
-                Expanded(child: PlayerList(game: _game))
+                Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Center(
+                      child: loadingGame
+                          ? const CircularProgressIndicator(
+                              color: Colors.orange,
+                            )
+                          : ElevatedButton(
+                              onPressed: _game.isReadyToPlay
+                                  ? () => handleStartGame(context)
+                                  : null,
+                              child:
+                                  Styles.getElevatedButtonChild("Start Game"),
+                              style: Styles.getElevatedButtonStyle())),
+                  const FooterSpacing()
+                ]),
               ],
-            ),
-            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Center(
-                  child: loadingGame
-                      ? const CircularProgressIndicator(
-                          color: Colors.orange,
-                        )
-                      : ElevatedButton(
-                          onPressed: _game.isReadyToPlay
-                              ? () => handleStartGame(context)
-                              : null,
-                          child: Styles.getElevatedButtonChild("Start Game"),
-                          style: Styles.getElevatedButtonStyle())),
-              const FooterSpacing()
-            ]),
-          ],
-        ));
+            )));
   }
 }

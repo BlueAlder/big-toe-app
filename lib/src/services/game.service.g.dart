@@ -122,9 +122,9 @@ abstract class GameDocumentReference
     int totalRounds,
     bool isGameOver,
     int maxPlayers,
+    int defaultRoundCount,
     int minRoundCount,
     int maxRoundCount,
-    String promptPlaceholderWord,
     bool isReadyToPlay,
     String currentPrompt,
     int roundNumber,
@@ -176,9 +176,9 @@ class _$GameDocumentReference
     Object? totalRounds = _sentinel,
     Object? isGameOver = _sentinel,
     Object? maxPlayers = _sentinel,
+    Object? defaultRoundCount = _sentinel,
     Object? minRoundCount = _sentinel,
     Object? maxRoundCount = _sentinel,
-    Object? promptPlaceholderWord = _sentinel,
     Object? isReadyToPlay = _sentinel,
     Object? currentPrompt = _sentinel,
     Object? roundNumber = _sentinel,
@@ -188,10 +188,10 @@ class _$GameDocumentReference
       if (totalRounds != _sentinel) "totalRounds": totalRounds as int,
       if (isGameOver != _sentinel) "isGameOver": isGameOver as bool,
       if (maxPlayers != _sentinel) "maxPlayers": maxPlayers as int,
+      if (defaultRoundCount != _sentinel)
+        "defaultRoundCount": defaultRoundCount as int,
       if (minRoundCount != _sentinel) "minRoundCount": minRoundCount as int,
       if (maxRoundCount != _sentinel) "maxRoundCount": maxRoundCount as int,
-      if (promptPlaceholderWord != _sentinel)
-        "promptPlaceholderWord": promptPlaceholderWord as String,
       if (isReadyToPlay != _sentinel) "isReadyToPlay": isReadyToPlay as bool,
       if (currentPrompt != _sentinel) "currentPrompt": currentPrompt as String,
       if (roundNumber != _sentinel) "roundNumber": roundNumber as int,
@@ -286,6 +286,17 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     List<int>? whereIn,
     List<int>? whereNotIn,
   });
+  GameQuery whereDefaultRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  });
   GameQuery whereMinRoundCount({
     int? isEqualTo,
     int? isNotEqualTo,
@@ -307,17 +318,6 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     bool? isNull,
     List<int>? whereIn,
     List<int>? whereNotIn,
-  });
-  GameQuery wherePromptPlaceholderWord({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
   });
   GameQuery whereIsReadyToPlay({
     bool? isEqualTo,
@@ -401,6 +401,18 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     GameDocumentSnapshot? startAfterDocument,
   });
 
+  GameQuery orderByDefaultRoundCount({
+    bool descending = false,
+    int startAt,
+    int startAfter,
+    int endAt,
+    int endBefore,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  });
+
   GameQuery orderByMinRoundCount({
     bool descending = false,
     int startAt,
@@ -419,18 +431,6 @@ abstract class GameQuery implements QueryReference<GameQuerySnapshot> {
     int startAfter,
     int endAt,
     int endBefore,
-    GameDocumentSnapshot? startAtDocument,
-    GameDocumentSnapshot? endAtDocument,
-    GameDocumentSnapshot? endBeforeDocument,
-    GameDocumentSnapshot? startAfterDocument,
-  });
-
-  GameQuery orderByPromptPlaceholderWord({
-    bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
     GameDocumentSnapshot? startAtDocument,
     GameDocumentSnapshot? endAtDocument,
     GameDocumentSnapshot? endBeforeDocument,
@@ -645,6 +645,34 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     );
   }
 
+  GameQuery whereDefaultRoundCount({
+    int? isEqualTo,
+    int? isNotEqualTo,
+    int? isLessThan,
+    int? isLessThanOrEqualTo,
+    int? isGreaterThan,
+    int? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<int>? whereIn,
+    List<int>? whereNotIn,
+  }) {
+    return _$GameQuery(
+      reference.where(
+        'defaultRoundCount',
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      _collection,
+    );
+  }
+
   GameQuery whereMinRoundCount({
     int? isEqualTo,
     int? isNotEqualTo,
@@ -687,34 +715,6 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(
       reference.where(
         'maxRoundCount',
-        isEqualTo: isEqualTo,
-        isNotEqualTo: isNotEqualTo,
-        isLessThan: isLessThan,
-        isLessThanOrEqualTo: isLessThanOrEqualTo,
-        isGreaterThan: isGreaterThan,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
-        isNull: isNull,
-        whereIn: whereIn,
-        whereNotIn: whereNotIn,
-      ),
-      _collection,
-    );
-  }
-
-  GameQuery wherePromptPlaceholderWord({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
-  }) {
-    return _$GameQuery(
-      reference.where(
-        'promptPlaceholderWord',
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -981,6 +981,48 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     return _$GameQuery(query, _collection);
   }
 
+  GameQuery orderByDefaultRoundCount({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    GameDocumentSnapshot? startAtDocument,
+    GameDocumentSnapshot? endAtDocument,
+    GameDocumentSnapshot? endBeforeDocument,
+    GameDocumentSnapshot? startAfterDocument,
+  }) {
+    var query = reference.orderBy('defaultRoundCount', descending: descending);
+
+    if (startAtDocument != null) {
+      query = query.startAtDocument(startAtDocument.snapshot);
+    }
+    if (startAfterDocument != null) {
+      query = query.startAfterDocument(startAfterDocument.snapshot);
+    }
+    if (endAtDocument != null) {
+      query = query.endAtDocument(endAtDocument.snapshot);
+    }
+    if (endBeforeDocument != null) {
+      query = query.endBeforeDocument(endBeforeDocument.snapshot);
+    }
+
+    if (startAt != _sentinel) {
+      query = query.startAt([startAt]);
+    }
+    if (startAfter != _sentinel) {
+      query = query.startAfter([startAfter]);
+    }
+    if (endAt != _sentinel) {
+      query = query.endAt([endAt]);
+    }
+    if (endBefore != _sentinel) {
+      query = query.endBefore([endBefore]);
+    }
+
+    return _$GameQuery(query, _collection);
+  }
+
   GameQuery orderByMinRoundCount({
     bool descending = false,
     Object? startAt = _sentinel,
@@ -1035,49 +1077,6 @@ class _$GameQuery extends QueryReference<GameQuerySnapshot>
     GameDocumentSnapshot? startAfterDocument,
   }) {
     var query = reference.orderBy('maxRoundCount', descending: descending);
-
-    if (startAtDocument != null) {
-      query = query.startAtDocument(startAtDocument.snapshot);
-    }
-    if (startAfterDocument != null) {
-      query = query.startAfterDocument(startAfterDocument.snapshot);
-    }
-    if (endAtDocument != null) {
-      query = query.endAtDocument(endAtDocument.snapshot);
-    }
-    if (endBeforeDocument != null) {
-      query = query.endBeforeDocument(endBeforeDocument.snapshot);
-    }
-
-    if (startAt != _sentinel) {
-      query = query.startAt([startAt]);
-    }
-    if (startAfter != _sentinel) {
-      query = query.startAfter([startAfter]);
-    }
-    if (endAt != _sentinel) {
-      query = query.endAt([endAt]);
-    }
-    if (endBefore != _sentinel) {
-      query = query.endBefore([endBefore]);
-    }
-
-    return _$GameQuery(query, _collection);
-  }
-
-  GameQuery orderByPromptPlaceholderWord({
-    bool descending = false,
-    Object? startAt = _sentinel,
-    Object? startAfter = _sentinel,
-    Object? endAt = _sentinel,
-    Object? endBefore = _sentinel,
-    GameDocumentSnapshot? startAtDocument,
-    GameDocumentSnapshot? endAtDocument,
-    GameDocumentSnapshot? endBeforeDocument,
-    GameDocumentSnapshot? startAfterDocument,
-  }) {
-    var query =
-        reference.orderBy('promptPlaceholderWord', descending: descending);
 
     if (startAtDocument != null) {
       query = query.startAtDocument(startAtDocument.snapshot);

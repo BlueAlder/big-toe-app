@@ -1,12 +1,11 @@
-import 'package:big_toe_mobile/add-prompt/placeholder-button-prompt.widget.dart';
-import 'package:big_toe_mobile/add-prompt/prompt-count.widget.dart';
-import 'package:big_toe_mobile/shared/widgets/select-tags.widget.dart';
-import 'package:big_toe_mobile/services/prompt.service.dart';
-import 'package:big_toe_mobile/shared/widgets/back-button.widget.dart';
-import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../models/game.model.dart';
+
+import '../add-prompt/placeholder-button-prompt.widget.dart';
+import '../add-prompt/prompt-count.widget.dart';
+import '../shared/widgets/select-tags.widget.dart';
+import '../services/prompt.service.dart';
+import '../shared/widgets/back-button.widget.dart';
 import '../models/prompt.model.dart';
 import '../services/notification.service.dart';
 import '../shared/widgets/footer-spacing.widget.dart';
@@ -34,7 +33,7 @@ class _AddPromptViewState extends State<AddPromptView> {
       return;
     }
 
-    if (!promptString.contains(Game.promptPlaceholderWord)) {
+    if (!promptString.contains(Prompt.replacementKeyword)) {
       showConfirmationDialog(context, promptString);
       return;
     }
@@ -94,56 +93,62 @@ class _AddPromptViewState extends State<AddPromptView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.deepPurple,
-        body: Stack(
-          children: [
-            SpacedBackButton(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Add some prompts 😈",
-                    textAlign: TextAlign.center,
-                    style: Styles.getHeadingStyle()),
-
-                SelectTags(
-                  onTagChange: handleTagChange,
-                ),
-                ConstrainedBox(
-                     constraints: const BoxConstraints(maxWidth: Styles.textFieldWidth),
-                    child: TextField(
-                        controller: promptTextController,
-                        style: const TextStyle(color: Colors.white),
-                        onSubmitted: (value) =>
-                            handleSubmitPrompt(value, context),
-                        decoration: Utils.mergeInputDecoration(
-                          Styles.getTextFieldDecorationStyle(),
-                          const InputDecoration(
-                            hintText: "\$NAME please drink \$NAME's drink",
-                          ),
-                        )
-                    )
-                ),
-                PlaceholderButtonPrompt(
-                    appendPlaceholderToPrompt: appendPlaceholderToPrompt)
-              ],
-            ),
-            Align(
-                // alignment: Alignment.bottomCenter,
-                child:
-                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Container(
-                constraints: const BoxConstraints(maxWidth: 200),
-                child: ElevatedButton(
-                  onPressed: () =>
-                      handleSubmitPrompt(promptTextController.text, context),
-                  child: Styles.getElevatedButtonChild("Add Prompt",
-                      fontSize: 20, paddingAmount: 1),
-                  style: Styles.getElevatedButtonStyle(),
-                ),
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            debugPrint("uh");
+            FocusScope.of(context).unfocus();
+          },
+          child: Stack(
+            children: [
+              const SpacedBackButton(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Add some prompts 😈",
+                      textAlign: TextAlign.center,
+                      style: Styles.getHeadingStyle()),
+                  SelectTags(
+                    onTagChange: handleTagChange,
+                  ),
+                  ConstrainedBox(
+                      constraints:
+                          const BoxConstraints(maxWidth: Styles.textFieldWidth),
+                      child: TextField(
+                          controller: promptTextController,
+                          style: const TextStyle(color: Colors.white),
+                          onSubmitted: (value) =>
+                              handleSubmitPrompt(value, context),
+                          decoration: Utils.mergeInputDecoration(
+                            Styles.getTextFieldDecorationStyle(),
+                            const InputDecoration(
+                              hintText: "\$NAME please drink \$NAME's drink",
+                            ),
+                          ))),
+                  PlaceholderButtonPrompt(
+                      appendPlaceholderToPrompt: appendPlaceholderToPrompt)
+                ],
               ),
-              PromptCount(),
-              const FooterSpacing()
-            ]))
-          ],
+              Align(
+                  // alignment: Alignment.bottomCenter,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: ElevatedButton(
+                        onPressed: () => handleSubmitPrompt(
+                            promptTextController.text, context),
+                        child: Styles.getElevatedButtonChild("Add Prompt",
+                            fontSize: 20, paddingAmount: 1),
+                        style: Styles.getElevatedButtonStyle(),
+                      ),
+                    ),
+                    PromptCount(),
+                    const FooterSpacing()
+                  ]))
+            ],
+          ),
         ));
   }
 }

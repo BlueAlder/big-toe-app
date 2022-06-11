@@ -1,16 +1,22 @@
-# big_toe_mobile
+# Big Toe 
 
-Big Toe app for mobile, built using Flutter.
+This is a mobile app drinking game that generates prompts for a group of friends to play with.
 
-## Getting Started
+Features include adding custom prompts. Playing with specific tagged prompts (friend group specific)!
 
-This project is a starting point for a Flutter application.
+This was build using Flutter and yea.
 
-A few resources to get you started if this is your first Flutter project:
+## Build and installation
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+To build and run the app yourself from source you will need the [Flutter SDK](https://docs.flutter.dev/get-started/install)
+ installed.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Then you can run
+
+```bash
+flutter pub get
+flutter run 
+```
+
+This will run a debug version on whatever devices you have set up emulator/real. Then go ahead and
+have fun!

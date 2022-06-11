@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-
-import 'package:big_toe_mobile/shared/utils.dart';
 import 'package:get_it/get_it.dart';
 
+import '../shared/utils.dart';
 import '../models/prompt.model.dart';
 import 'firestore.service.dart';
 

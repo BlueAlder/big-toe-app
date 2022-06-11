@@ -5,8 +5,8 @@
 import 'dart:async' as _i5;
 import 'dart:typed_data' as _i6;
 
-import 'package:big_toe_mobile/models/prompt.model.dart' as _i8;
-import 'package:big_toe_mobile/services/prompt.service.dart' as _i7;
+import 'package:big_toe_mobile/src/models/prompt.model.dart' as _i8;
+import 'package:big_toe_mobile/src/services/prompt.service.dart' as _i7;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart'
     as _i3;

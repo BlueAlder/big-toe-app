@@ -1,8 +1,8 @@
-import 'package:big_toe_mobile/services/prompt.service.dart';
-import 'package:big_toe_mobile/shared/styles.dart';
-import 'package:big_toe_mobile/shared/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
+import '../shared/styles.dart';
+import '../services/prompt.service.dart';
 
 class PromptCount extends StatelessWidget {
   PromptCount({Key? key}) : super(key: key);

@@ -1,16 +1,15 @@
-import 'package:big_toe_mobile/services/firestore.service.dart';
-import 'package:big_toe_mobile/services/notification.service.dart';
-import 'package:big_toe_mobile/services/prompt.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/services.dart';
-import 'dart:io' show Platform;
 
 import 'firebase_options.dart';
-import 'home/home.dart';
-import 'services/game.service.dart';
+import 'src/home/home.dart';
+import 'src/services/game.service.dart';
+import 'src/services/firestore.service.dart';
+import 'src/services/notification.service.dart';
+import 'src/services/prompt.service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +17,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   registerServices();
   runApp(const MyApp());
 }

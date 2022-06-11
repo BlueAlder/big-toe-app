@@ -1,10 +1,19 @@
-import 'package:big_toe_mobile/models/game.model.dart';
-import 'package:big_toe_mobile/models/prompt.model.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
+import 'package:big_toe_mobile/src/models/prompt.model.dart';
+import 'package:big_toe_mobile/src/models/game.model.dart';
+
+import 'game.model_test.mocks.dart';
+
+
+@GenerateMocks([Prompt])
 void main() {
   late Game game;
-  setUp(() => game = Game());
+  setUp(() {
+    return game = Game();
+  });
 
   group("Next Round Function", () {
     test("Should go to next round at the start of game", () {
@@ -157,10 +166,12 @@ void main() {
       const playerName = "test_player";
       game.addPlayer(playerName);
 
-      const promptValue = "verify $replacementKeyword should be changed";
-      game.setPrompts([Prompt(promptValue)]);
+      const promptValue = "a test prompt";
+      final mockPrompt = MockPrompt();
+      when(mockPrompt.formatPrompt(game.players)).thenReturn(Prompt(promptValue));
+      game.setPrompts([mockPrompt]);
 
-      expect(game.prompts.elementAt(0), "verify test_player should be changed");
+      expect(game.prompts.elementAt(0), equals(promptValue));
       expect(game.totalRounds, 1);
     });
 
@@ -188,6 +199,28 @@ void main() {
         expect(
             prompt.contains(playerName1) || prompt.contains(playerName2), true);
       }
+    });
+
+  });
+
+  group("Changing Game Tags", () {
+    test("Adding tags to a game", () {
+      const tags = {'tag1', 'tag2'};
+      expect(game.tags.length, equals(0));
+
+      game.setTags(tags);
+      expect(game.tags.length, equals(2));
+    });
+
+    test("Removing tags from a game", () {
+      const tags = {'tag1', 'tag2'};
+      expect(game.tags.length, equals(0));
+
+      game.setTags(tags);
+      expect(game.tags.length, equals(2));
+
+      game.setTags({});
+      expect(game.tags.length, equals(0));
     });
 
   });

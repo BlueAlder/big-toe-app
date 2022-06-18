@@ -59,12 +59,14 @@ class _GamePageState extends State<GamePage> {
         onHorizontalDragEnd: (details) => handleSwipeBack(details),
         child: Scaffold(
             backgroundColor: currentColor,
-            body: Center(
-                child: widget.game.isGameOver
-                    ? const GameOver()
-                    : SingleChildScrollView(
-                        child: Text(widget.game.currentPrompt,
-                            textAlign: TextAlign.center,
-                            style: Styles.getPromptTextStyle())))));
+            body: Container(
+                margin: const EdgeInsets.all(10),
+                child: Center(
+                    child: widget.game.isGameOver
+                        ? const GameOver()
+                        : SingleChildScrollView(
+                            child: Text(widget.game.currentPrompt,
+                                textAlign: TextAlign.center,
+                                style: Styles.getPromptTextStyle()))))));
   }
 }

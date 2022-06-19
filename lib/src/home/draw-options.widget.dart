@@ -20,6 +20,10 @@ class DrawerOptions extends StatelessWidget {
     _authService.signInWithGoogle();
   }
 
+  handleLogout() {
+    _authService.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,13 +35,21 @@ class DrawerOptions extends StatelessWidget {
         ),
         Text("Big Toe", style: Styles.getHeadingStyle()),
         const Divider(thickness: 2, indent: 20, endIndent: 20),
-        ListTile(
-            leading: const Icon(
-              Icons.login,
-              color: Colors.white,
-            ),
-            onTap: () => handleLogin(),
-            title: Text("Login", style: Styles.getRegularTextStyle())),
+        _authService.isLoggedIn
+            ? ListTile(
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                onTap: () => handleLogout(),
+                title: Text("Logout", style: Styles.getRegularTextStyle()))
+            : ListTile(
+                leading: const Icon(
+                  Icons.login,
+                  color: Colors.white,
+                ),
+                onTap: () => handleLogin(),
+                title: Text("Login", style: Styles.getRegularTextStyle())),
         ListTile(
             leading: const Icon(
               Icons.add,

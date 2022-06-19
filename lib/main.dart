@@ -1,3 +1,4 @@
+import 'package:big_toe_mobile/src/services/auth.service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,6 +35,7 @@ void registerServices() {
   }
 
   GetIt.I.registerSingleton(FirestoreService());
+  GetIt.I.registerSingleton(AuthService());
   GetIt.I.registerSingleton<PromptService>(PromptService());
   GetIt.I.registerSingleton<GameService>(GameService());
   GetIt.I.registerSingleton<NotificationService>(NotificationService());

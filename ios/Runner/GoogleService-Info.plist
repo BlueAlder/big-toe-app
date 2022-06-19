@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>183267650933-ke5ug9jqajrp7qfqc8v71tt4aai6c254.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.183267650933-ke5ug9jqajrp7qfqc8v71tt4aai6c254</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAMi_-n91C45kMYaZQXwEli4zPmuGIFrdA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>183267650933</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>me.samcalamos.bigtoe</string>
+	<key>PROJECT_ID</key>
+	<string>big-toe-game</string>
+	<key>STORAGE_BUCKET</key>
+	<string>big-toe-game.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:183267650933:ios:c609bafdb83761bbe0373c</string>
+	<key>DATABASE_URL</key>
+	<string>https://big-toe-game.firebaseio.com</string>
+</dict>
+</plist>

@@ -93,8 +93,7 @@ class _MyHomePageState extends State<MyHomePage>
             )
           ],
         ),
-        drawer: const Drawer(
-            backgroundColor: Colors.deepOrange, child: DrawerOptions()));
+        drawer:
+            Drawer(backgroundColor: Colors.deepOrange, child: DrawerOptions()));
   }
 }
-

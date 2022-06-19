@@ -45,11 +45,10 @@ class _AddPlayerState extends State<AddPlayer> {
             hintText: "Add a player",
             suffixIcon: IconButton(
                 icon: const Icon(
-                  Icons.add,
+                  Icons.clear,
                   color: Colors.white,
                 ),
-                onPressed: () =>
-                    {handleSubmitPlayer(textController.text)}),
+                onPressed: () => {handleSubmitPlayer(textController.text)}),
           )),
     );
   }

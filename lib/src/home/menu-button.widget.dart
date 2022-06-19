@@ -14,8 +14,8 @@ class MenuButton extends StatelessWidget {
           icon: const Icon(
             Icons.menu,
             size: 40,
+            color: Colors.white,
           )),
     );
   }
 }
-

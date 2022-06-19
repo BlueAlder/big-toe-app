@@ -76,11 +76,20 @@ class _AddPromptViewState extends State<AddPromptView> {
   }
 
   void appendPlaceholderToPrompt() {
-    final newPromptString = promptTextController.text + "\$NAME ";
+    const textToAdd = Prompt.replacementKeyword + " ";
+    final cursorPosition = promptTextController.selection.base.offset;
+    final prefixText = promptTextController.text.substring(0, cursorPosition);
+    final suffixText = promptTextController.text.substring(cursorPosition);
+
+    final newPromptString = prefixText + textToAdd + suffixText;
     promptTextController.value = TextEditingValue(
         text: newPromptString,
         selection: TextSelection.fromPosition(
-            TextPosition(offset: newPromptString.length)));
+            TextPosition(offset: prefixText.length + textToAdd.length)));
+  }
+
+  void handleClearPrompt() {
+    promptTextController.value = TextEditingValue.empty;
   }
 
   @override
@@ -119,8 +128,14 @@ class _AddPromptViewState extends State<AddPromptView> {
                           onSubmitted: handleSubmitPrompt,
                           decoration: Utils.mergeInputDecoration(
                             Styles.getTextFieldDecorationStyle(),
-                            const InputDecoration(
+                            InputDecoration(
                               hintText: "\$NAME please drink \$NAME's drink",
+                              suffixIcon: IconButton(
+                                  icon: const Icon(
+                                    Icons.clear,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: handleClearPrompt),
                             ),
                           ))),
                   PlaceholderButtonPrompt(
@@ -147,7 +162,6 @@ class _AddPromptViewState extends State<AddPromptView> {
                   ]))
             ],
           ),
-        )
-    );
+        ));
   }
 }

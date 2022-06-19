@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../setup/setup-game.view.dart';
 import '../shared/styles.dart';
 
-import 'draw-options.widget.dart';
+import 'drawer/draw-options.widget.dart';
 import 'menu-button.widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,7 +25,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-
   // TODO refactor this into the Style class
   final mainTitleStyle = GoogleFonts.corben(
     fontSize: 70,
@@ -93,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage>
             )
           ],
         ),
-        drawer:
-            Drawer(backgroundColor: Colors.deepOrange, child: DrawerOptions()));
+        drawer: const Drawer(
+            backgroundColor: Colors.deepOrange, child: DrawerOptions()));
   }
 }

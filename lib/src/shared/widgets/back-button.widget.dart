@@ -6,8 +6,10 @@ class SpacedBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(top: 25, left: 25),
-        child: const BackButton(),
+      margin: const EdgeInsets.only(top: 25, left: 25),
+      child: const BackButton(
+        color: Colors.white,
+      ),
     );
   }
 }

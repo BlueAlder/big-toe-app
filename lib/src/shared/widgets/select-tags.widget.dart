@@ -1,8 +1,6 @@
 import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../services/prompt.service.dart';
 import '../styles.dart';
 
 class SelectTags extends StatefulWidget {
@@ -14,14 +12,14 @@ class SelectTags extends StatefulWidget {
 }
 
 class _SelectTagsState extends State<SelectTags> {
-
   final listOfAvailableTags = ['picante', 'bang', 'crippin'];
   final List<int> selectedTagsIndex = [];
 
   void handleCategorySelect(int categoryIndex) {
-    final newTags = selectedTagsIndex.map((index) => listOfAvailableTags[index]).toSet();
+    final newTags =
+        selectedTagsIndex.map((index) => listOfAvailableTags[index]).toSet();
     widget.onTagChange(newTags);
-    setState((){});
+    setState(() {});
   }
 
   @override
@@ -36,7 +34,7 @@ class _SelectTagsState extends State<SelectTags> {
             style: Styles.getRegularTextStyle(),
             inactiveTextColorList: const [Colors.orangeAccent],
             activeBgColorList: const [Colors.orangeAccent],
-            listOfChipIndicesCurrentlySeclected:  selectedTagsIndex),
+            listOfChipIndicesCurrentlySeclected: selectedTagsIndex),
         const Tooltip(
             triggerMode: TooltipTriggerMode.tap,
             message: "Prompt Tags",
@@ -44,8 +42,7 @@ class _SelectTagsState extends State<SelectTags> {
             child: Icon(
               Icons.help,
               color: Colors.white,
-            )
-        )
+            ))
       ],
     );
   }

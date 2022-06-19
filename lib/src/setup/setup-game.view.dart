@@ -27,13 +27,10 @@ class _GameSetupPageState extends State<GameSetupPage> {
   final Game _game = Game();
   bool loadingGame = false;
 
-
-
   void incrementRounds(int amountToIncrement) {
     setState(() {
       _game.changeTotalRounds(amountToIncrement);
     });
-
   }
 
   void handleChangeTags(Set<String> newTags) {
@@ -52,7 +49,6 @@ class _GameSetupPageState extends State<GameSetupPage> {
     });
   }
 
-
   Future<void> handleStartGame() async {
     FocusScope.of(context).unfocus();
     setState(() {
@@ -67,7 +63,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
         );
       }));
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     } finally {
       setState(() {
         loadingGame = false;

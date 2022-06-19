@@ -44,8 +44,6 @@ class _GameLengthSettingState extends State<GameLengthSetting>
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
-                // switchOutCurve: Curves.easeInOutCubic,
-                // switchInCurve: Curves.fastLinearToSlowEaseIn,
                 transitionBuilder: (child, animation) =>
                     RotationTransition(
                       turns: animation,

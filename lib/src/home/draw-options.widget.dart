@@ -6,7 +6,7 @@ import '../shared/styles.dart';
 class DrawerOptions extends StatelessWidget {
   const DrawerOptions({Key? key}) : super(key: key);
 
-  handleAddPrompt(context) {
+  handleAddPrompt(BuildContext context) {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return const AddPromptView();

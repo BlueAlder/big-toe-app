@@ -26,7 +26,7 @@ class _AddPromptViewState extends State<AddPromptView> {
   final promptTextController = TextEditingController();
   Set<String> selectedTags = {};
 
-  void handleSubmitPrompt(String promptString, BuildContext context) {
+  void handleSubmitPrompt(String promptString) {
     if (promptString.isEmpty) {
       _notificationService.showSnackBarMessage(
           "Can't submit an empty prompt you fucking idiot", context);
@@ -34,7 +34,7 @@ class _AddPromptViewState extends State<AddPromptView> {
     }
 
     if (!promptString.contains(Prompt.replacementKeyword)) {
-      showConfirmationDialog(context, promptString);
+      showConfirmationDialog(promptString);
       return;
     }
 
@@ -52,7 +52,7 @@ class _AddPromptViewState extends State<AddPromptView> {
     debugPrint(selectedTags.toString());
   }
 
-  void showConfirmationDialog(BuildContext context, String prompt) {
+  void showConfirmationDialog(String prompt) {
     showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -75,7 +75,7 @@ class _AddPromptViewState extends State<AddPromptView> {
                 ]));
   }
 
-  appendPlaceholderToPrompt() {
+  void appendPlaceholderToPrompt() {
     final newPromptString = promptTextController.text + "\$NAME ";
     promptTextController.value = TextEditingValue(
         text: newPromptString,
@@ -96,7 +96,6 @@ class _AddPromptViewState extends State<AddPromptView> {
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            debugPrint("uh");
             FocusScope.of(context).unfocus();
           },
           child: Stack(
@@ -117,8 +116,7 @@ class _AddPromptViewState extends State<AddPromptView> {
                       child: TextField(
                           controller: promptTextController,
                           style: const TextStyle(color: Colors.white),
-                          onSubmitted: (value) =>
-                              handleSubmitPrompt(value, context),
+                          onSubmitted: handleSubmitPrompt,
                           decoration: Utils.mergeInputDecoration(
                             Styles.getTextFieldDecorationStyle(),
                             const InputDecoration(
@@ -137,8 +135,8 @@ class _AddPromptViewState extends State<AddPromptView> {
                     Container(
                       constraints: const BoxConstraints(maxWidth: 200),
                       child: ElevatedButton(
-                        onPressed: () => handleSubmitPrompt(
-                            promptTextController.text, context),
+                        onPressed: () =>
+                            handleSubmitPrompt(promptTextController.text),
                         child: Styles.getElevatedButtonChild("Add Prompt",
                             fontSize: 20, paddingAmount: 1),
                         style: Styles.getElevatedButtonStyle(),
@@ -149,6 +147,7 @@ class _AddPromptViewState extends State<AddPromptView> {
                   ]))
             ],
           ),
-        ));
+        )
+    );
   }
 }

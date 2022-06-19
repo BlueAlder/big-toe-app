@@ -7,7 +7,7 @@ class SpacedBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(top: 25, left: 25),
-        child: BackButton(),
+        child: const BackButton(),
     );
   }
 }

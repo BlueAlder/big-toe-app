@@ -8,7 +8,7 @@ GameService gameService = GetIt.I.get<GameService>();
 
 class AddPlayer extends StatefulWidget {
   const AddPlayer({Key? key, required this.addPlayer}) : super(key: key);
-  final Function addPlayer;
+  final Function(String) addPlayer;
 
   @override
   State<AddPlayer> createState() => _AddPlayerState();
@@ -17,10 +17,10 @@ class AddPlayer extends StatefulWidget {
 class _AddPlayerState extends State<AddPlayer> {
   final textController = TextEditingController();
 
-  void handleSubmitPlayer(BuildContext context, String playerName) {
+  void handleSubmitPlayer(String playerName) {
     if (playerName.isNotEmpty) {
       textController.text = "";
-      widget.addPlayer(context, playerName);
+      widget.addPlayer(playerName);
     }
   }
 
@@ -34,7 +34,7 @@ class _AddPlayerState extends State<AddPlayer> {
   Widget build(BuildContext context) {
     return TextField(
       controller: textController,
-      onSubmitted: (value) => handleSubmitPlayer(context, value),
+      onSubmitted: (value) => handleSubmitPlayer(value),
       onEditingComplete: () {},
       maxLength: 20,
       textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class _AddPlayerState extends State<AddPlayer> {
                   color: Colors.white,
                 ),
                 onPressed: () =>
-                    {handleSubmitPlayer(context, textController.text)}),
+                    {handleSubmitPlayer(textController.text)}),
           )),
     );
   }

@@ -21,7 +21,6 @@ class _SelectTagsState extends State<SelectTags> {
   void handleCategorySelect(int categoryIndex) {
     final newTags = selectedTagsIndex.map((index) => listOfAvailableTags[index]).toSet();
     widget.onTagChange(newTags);
-
     setState((){});
   }
 

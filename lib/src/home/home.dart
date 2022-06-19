@@ -25,12 +25,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+
+  // TODO refactor this into the Style class
   final mainTitleStyle = GoogleFonts.corben(
     fontSize: 70,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
 
+  // TODO refactor this into the Style class
   final buttonStyle = GoogleFonts.arimo(
     fontSize: 30,
   );
@@ -48,9 +51,9 @@ class _MyHomePageState extends State<MyHomePage>
     })
     ..forward();
 
-  handleNewGame(context) {
+  handleNewGame() {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return GameSetupPage();
+      return const GameSetupPage();
     }));
   }
 
@@ -81,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage>
                   Text("Big Toe", style: mainTitleStyle),
                   const SizedBox(height: 30),
                   ElevatedButton(
-                    onPressed: () => handleNewGame(context),
+                    onPressed: handleNewGame,
                     child: Styles.getElevatedButtonChild("New Game"),
                     style: Styles.getElevatedButtonStyle(),
                   )

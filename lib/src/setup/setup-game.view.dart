@@ -27,17 +27,20 @@ class _GameSetupPageState extends State<GameSetupPage> {
   final Game _game = Game();
   bool loadingGame = false;
 
+
+
   void incrementRounds(int amountToIncrement) {
     setState(() {
       _game.changeTotalRounds(amountToIncrement);
     });
+
   }
 
   void handleChangeTags(Set<String> newTags) {
     _game.setTags(newTags);
   }
 
-  void handleAddPlayer(BuildContext context, String playerName) {
+  void handleAddPlayer(String playerName) {
     setState(() {
       try {
         _game.addPlayer(playerName);
@@ -49,7 +52,8 @@ class _GameSetupPageState extends State<GameSetupPage> {
     });
   }
 
-  Future<void> handleStartGame(BuildContext context) async {
+
+  Future<void> handleStartGame() async {
     FocusScope.of(context).unfocus();
     setState(() {
       loadingGame = true;
@@ -109,7 +113,7 @@ class _GameSetupPageState extends State<GameSetupPage> {
                             )
                           : ElevatedButton(
                               onPressed: _game.isReadyToPlay
-                                  ? () => handleStartGame(context)
+                                  ? () => handleStartGame()
                                   : null,
                               child:
                                   Styles.getElevatedButtonChild("Start Game"),

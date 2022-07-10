@@ -25,7 +25,7 @@ class DrawerOptions extends StatelessWidget {
         ),
         Text("Big Toe", style: Styles.getHeadingStyle()),
         const Divider(thickness: 2, indent: 20, endIndent: 20),
-        const LoginAction(),
+        // const LoginAction(),
         ListTile(
             leading: const Icon(
               Icons.add,

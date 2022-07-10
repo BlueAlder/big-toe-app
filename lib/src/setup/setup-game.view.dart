@@ -90,9 +90,11 @@ class _GameSetupPageState extends State<GameSetupPage> {
                     ),
                     Text("Game Setup", style: Styles.getHeadingStyle()),
                     GameLengthSetting(game: _game),
-                    SelectTags(
-                      onTagChange: handleChangeTags,
-                    ),
+                    // TODO: Put select tags back in the game, when it's a good implementation
+                    //
+                    // SelectTags(
+                    //   onTagChange: handleChangeTags,
+                    // ),
                     Container(
                       constraints:
                           const BoxConstraints(maxWidth: Styles.textFieldWidth),
